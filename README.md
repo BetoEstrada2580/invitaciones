@@ -3,7 +3,6 @@
 
 Proyecto en laravel 9 para sistema de venta de invitaciones web
 
-
 ## Run Locally
 
 Clone the project
@@ -32,10 +31,10 @@ Running migrations and seeders
   php artisan db:seed
 ```
 
-Start the server
+Start Vite development server
 
 ```bash
-  npm run start
+  npm run dev
 ```
 
 Start the laravel server
@@ -64,8 +63,6 @@ Start the laravel server
     - Crear arhivo de policys de cierto modelo
 - php artisan serve
     - Arrancar el server de laravel
-- npm run dev
-    - Correr server para hotload
 - php artisan tinker
     - shell de Laravel
 - php artisan make:model --migration --factory **{Modelname}**
