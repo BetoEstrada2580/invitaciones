@@ -1,18 +1,50 @@
 
 # Invitaciones
 
+Proyecto en laravel 9 para sistema de venta de invitaciones web
 
-## Instrucciones
 
-- **Clonar repositorio**
-    - git clone https://github.com/BetoEstrada2580/invitaciones.git
-- **Instalar dependencias necesarias**
-    - composer install
-- **Correr la migracion de las tablas**
-    - php artisan migrate
-- **Agregar los registros base con los seeders**
-    - comando de los seeders
-## Comandos Laravel
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/BetoEstrada2580/invitaciones.git
+```
+
+Go to the project directory
+
+```bash
+  cd invitaciones
+```
+
+Install dependencies
+
+```bash
+  composer install
+  npm install
+```
+
+Running migrations and seeders
+
+```bash
+  php artisan migrate
+  php artisan db:seed
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
+Start the laravel server
+
+```bash
+  php artisan serve
+```
+
+## Commands
 
 - php artisan make:model --migration **{ModelName}**
     - Crear archivo de modelo y migracion a la vez
@@ -38,9 +70,13 @@
     - shell de Laravel
 - php artisan make:model --migration --factory **{Modelname}**
     - Hacer modelo, migracion y factory (creacion de registros para pruebas junto con tinker)
+- php artisan make:seeder **{Seedername}**
+    - Crear seeder
+## Documentation
 
-## Paginas de interes
+- [Laravel Documentation](https://laravel.com/docs/9.x)
+- [Trello](https://trello.com/b/HrYki7FI/invitaciones)
+- [Bootstrap](https://getbootstrap.com/docs/5.2/getting-started/introduction/)
+## Authors
 
-- **[Laravel Documentation](https://laravel.com/docs/9.x)**
-- **[Trello](https://trello.com/b/HrYki7FI/invitaciones)**
-- **[Bootstrap](https://getbootstrap.com/docs/5.2/getting-started/introduction/)**
+- [@BetoEstrada2580](https://github.com/BetoEstrada2580)
