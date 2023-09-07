@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::dropIfExists('users');
 
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->BigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->integer('type')->unsigned();
+            $table->smallInteger('type')->unsigned();
             $table->boolean('accepted_affiliation')->default(0);
             $table->foreign('type')->references('id')
                 ->on('user_types')->onDelete('cascade')->onUpdate('cascade');
