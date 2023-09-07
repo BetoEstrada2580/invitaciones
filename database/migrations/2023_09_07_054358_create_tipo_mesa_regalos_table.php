@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tipo_mesa_regalos', function (Blueprint $table) {
-            $table->smallInteger('id');
+            $table->smallInteger('id')->unsigned()->primary();
             $table->string('nombre',50);
         });
     }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('nivel_paquetes', function (Blueprint $table) {
-            $table->smallInteger('id');
+            $table->smallInteger('id')->unsigned()->primary();
             $table->string('nombre',50);
             $table->double('costo');
             $table->string('descripcion');

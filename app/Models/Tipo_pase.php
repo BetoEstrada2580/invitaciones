@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class NivelPaquete extends Model
+class Tipo_pase extends Model
 {
     use HasFactory;
 }

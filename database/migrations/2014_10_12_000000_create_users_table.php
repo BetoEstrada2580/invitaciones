@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->smallInteger('type')->unsigned();
+            $table->smallInteger('tipo_usuarios_id')->unsigned();
             $table->boolean('accepted_affiliation')->default(0);
-            $table->foreign('type')->references('id')
-                ->on('user_types')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('tipo_usuarios_id')->references('id')
+            ->on('tipo_usuarios')->onDelete('cascade')->onUpdate('cascade');
             $table->rememberToken();
             $table->boolean('deleted')->default(0);
             $table->timestamps();
@@ -34,6 +34,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->dropForeign('users_type_foreign');
+        //     $table->dropColumn('tipo_usuarios_id');
+        // });
         Schema::dropIfExists('users');
     }
 };

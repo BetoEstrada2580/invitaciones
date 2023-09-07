@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tipo_usuarios', function (Blueprint $table) {
-            $table->smallInteger('id');
-            $table->string('name',50);
-            $table->boolean('deleted')->default(0);
+            $table->smallInteger('id')->unsigned()->primary();
+            $table->string('nombre',50);
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_types');
+        Schema::dropIfExists('tipo_usuarios');
     }
 };
