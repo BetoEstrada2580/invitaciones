@@ -5,13 +5,13 @@
 ## Instrucciones
 
 - **Clonar repositorio**
-    - Git clone
+    - git clone https://github.com/BetoEstrada2580/invitaciones.git
 - **Instalar dependencias necesarias**
     - composer install
-- **php artisan migrate**
-    - Correr la migracion de las tablas
-- **Comando de los seeders**
-    - Agregar los registros base con los seeders
+- **Correr la migracion de las tablas**
+    - php artisan migrate
+- **Agregar los registros base con los seeders**
+    - comando de los seeders
 ## Comandos Laravel
 
 - php artisan make:model --migration **{ModelName}**
