@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('seccion_mesas', function (Blueprint $table) {
-            $table->smallInteger('id')->unsigned()->primary();
+            $table->smallIncrements('id')->unsigned();
             $table->string('nombre',50);
         });
     }

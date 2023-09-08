@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipo_usuarios', function (Blueprint $table) {
-            $table->smallIncrements('id')->unsigned();
-            $table->string('nombre',50);
+        Schema::create('galerias', function (Blueprint $table) {
+            $table->BigIncrements('id');
+            $table->foreignId('evento_id')->constrained()->onDelete('cascade');
+            $table->foreignId('imagen_id')->constrained()->onDelete('cascade');
+            $table->smallInteger('orden');
         });
     }
 
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipo_usuarios');
+        Schema::dropIfExists('galerias');
     }
 };
