@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipo_usuarios', function (Blueprint $table) {
+        Schema::create('rols', function (Blueprint $table) {
             $table->smallIncrements('id')->unsigned();
             $table->string('nombre',50);
         });
@@ -22,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipo_usuarios');
+        Schema::dropIfExists('rols');
     }
 };

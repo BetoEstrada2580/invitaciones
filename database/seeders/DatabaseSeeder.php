@@ -22,8 +22,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             Nivel_paqueteSeeder::class,
             Tipo_ubicacionSeeder::class,
-            Tipo_usuarioSeeder::class,
+            RolSeeder::class,
             Tipo_vestimentaSeeder::class,
+            Tipo_eventoSeeder::class,
+            UserSeeder::class,
+            EventoSeeder::class,
         ]);
     }
 }

@@ -25,7 +25,19 @@ class Tipo_ubicacionSeeder extends Seeder
         ]);
 
         DB::table('tipo_ubicacions')->insert([
+            'nombre' => 'Salon',
+        ]);
+
+        DB::table('tipo_ubicacions')->insert([
+            'nombre' => 'Alberca',
+        ]);
+
+        DB::table('tipo_ubicacions')->insert([
             'nombre' => 'Casa',
+        ]);
+
+        DB::table('tipo_ubicacions')->insert([
+            'nombre' => 'After',
         ]);
     }
 }

@@ -17,8 +17,9 @@ return new class extends Migration
             $table->BigIncrements('id');
             $table->smallInteger('tipo_eventos_id')->unsigned();
             $table->smallInteger('nivel_paquete_id')->unsigned();
-            $table->smallInteger('tipo_pase_id')->unsigned();
+            // $table->smallInteger('tipo_pase_id')->unsigned();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('clave')->unique();
             $table->string('festejado');
             $table->string('titulo');
             $table->dateTime('fecha');
@@ -42,8 +43,8 @@ return new class extends Migration
             ->on('tipo_eventos')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('nivel_paquete_id')->references('id')
             ->on('nivel_paquetes')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('tipo_pase_id')->references('id')
-            ->on('tipo_pases')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('tipo_pase_id')->references('id')
+            // ->on('tipo_pases')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

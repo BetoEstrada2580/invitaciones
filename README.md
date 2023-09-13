@@ -20,14 +20,14 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  composer install
+  composer install;
   npm install
 ```
 
 Running migrations and seeders
 
 ```bash
-  php artisan migrate
+  php artisan migrate;
   php artisan db:seed
 ```
 
@@ -37,7 +37,7 @@ Start Vite development server
   npm run dev
 ```
 
-Start the laravel server
+Start the laravel server (doesn't neeeded in laravel)
 
 ```bash
   php artisan serve

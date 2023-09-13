@@ -19,13 +19,15 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->smallInteger('tipo_usuarios_id')->unsigned();
-            $table->boolean('accepted_affiliation')->default(0);
-            $table->foreign('tipo_usuarios_id')->references('id')
-            ->on('tipo_usuarios')->onDelete('cascade')->onUpdate('cascade');
+            $table->smallInteger('rol_id')->unsigned();
             $table->rememberToken();
             $table->boolean('deleted')->default(0);
             $table->timestamps();
+        });
+
+        Schema::table('users', function($table) {
+            $table->foreign('rol_id')->references('id')
+            ->on('rols')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
