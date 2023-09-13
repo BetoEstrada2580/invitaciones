@@ -20,15 +20,20 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  composer install;
-  npm install
+  composer install && npm install
 ```
+
 
 Running migrations and seeders
 
 ```bash
-  php artisan migrate;
-  php artisan db:seed
+  php artisan migrate && php artisan db:seed
+```
+
+Open folder in VScode
+
+```bash
+  code .
 ```
 
 Start Vite development server
@@ -37,7 +42,7 @@ Start Vite development server
   npm run dev
 ```
 
-Start the laravel server (doesn't neeeded in laravel)
+Start the laravel server (doesn't neeeded in laragon)
 
 ```bash
   php artisan serve
@@ -73,6 +78,9 @@ Start the laravel server (doesn't neeeded in laravel)
 - [Trello](https://trello.com/b/HrYki7FI/invitaciones)
 - [DataTables](https://datatables.net/examples/index)
 - [Tailwindscss](https://tailwindcss.com/docs/guides/laravel)
+- [Tailwindcomponents](https://tailwindcomponents.com/)
+- [Tailwind-elements](https://tailwind-elements.com/docs/standard/getting-started/quick-start/#)
+
 
 ## Authors
 
