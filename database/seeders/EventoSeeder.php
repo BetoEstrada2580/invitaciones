@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Nivel_paquete;
+use App\Models\Plantilla;
 use App\Models\Tipo_evento;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -17,8 +18,9 @@ class EventoSeeder extends Seeder
     public function run(): void
     {
         DB::table('eventos')->insert([
-            'tipo_eventos_id' => Tipo_evento::all()->random()->id,
+            'tipo_evento_id' => Tipo_evento::all()->random()->id,
             'nivel_paquete_id' => Nivel_paquete::all()->random()->id,
+            'plantilla_id' => Plantilla::all()->random()->id,
             'user_id' => User::all()->random()->id,
             'clave' => 'FiestaTest',
             'festejado' => 'Festejado Test',
@@ -32,7 +34,7 @@ class EventoSeeder extends Seeder
             'cancion' => 'www.spotify.com',
             'created_by' => User::all()->random()->id,
             'created_at' => date("Y-m-d H:i:s"),
-            'uploaded_by' => User::all()->random()->id,
+            'updated_by' => User::all()->random()->id,
             'updated_at' => date("Y-m-d H:i:s"),
         ]);
 

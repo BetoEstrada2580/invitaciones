@@ -13,38 +13,37 @@ return new class extends Migration
     {
 
         Schema::create('eventos', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
             $table->BigIncrements('id');
-            $table->smallInteger('tipo_eventos_id')->unsigned();
+            $table->smallInteger('tipo_evento_id')->unsigned();
             $table->smallInteger('nivel_paquete_id')->unsigned();
-            // $table->smallInteger('tipo_pase_id')->unsigned();
+            $table->smallInteger('plantilla_id')->unsigned();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('clave')->unique();
             $table->string('festejado');
             $table->string('titulo');
             $table->dateTime('fecha');
-            $table->string('mensaje');
-            $table->string('titulo_final',100);
-            $table->string('mensaje_final',100);
-            $table->string('hashtag',100);
-            $table->string('video');
-            $table->string('cancion');
+            $table->string('mensaje')->nullable();
+            $table->string('titulo_final',100)->nullable();
+            $table->string('mensaje_final',100)->nullable();
+            $table->string('hashtag',100)->nullable();
+            $table->string('video')->nullable();
+            $table->string('cancion')->nullable();
             $table->bigInteger('created_by')->unsigned();
             $table->foreign('created_by')->references('id')->on('users');
             $table->timestamp('created_at');
-            $table->bigInteger('uploaded_by')->unsigned();
-            $table->foreign('uploaded_by')->references('id')->on('users');
+            $table->bigInteger('updated_by')->unsigned();
+            $table->foreign('updated_by')->references('id')->on('users');
             $table->timestamp('updated_at');
             $table->boolean('deleted')->default(0);
         });
 
         Schema::table('eventos', function($table) {
-            $table->foreign('tipo_eventos_id')->references('id')
+            $table->foreign('tipo_evento_id')->references('id')
             ->on('tipo_eventos')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('nivel_paquete_id')->references('id')
             ->on('nivel_paquetes')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('tipo_pase_id')->references('id')
-            // ->on('tipo_pases')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('plantilla_id')->references('id')
+            ->on('plantillas')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

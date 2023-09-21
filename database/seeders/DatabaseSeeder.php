@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             RolSeeder::class,
             Tipo_vestimentaSeeder::class,
             Tipo_eventoSeeder::class,
+            PlantillaSeeder::class,
             UserSeeder::class,
             EventoSeeder::class,
         ]);
