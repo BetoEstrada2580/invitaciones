@@ -66,8 +66,8 @@ Start the laravel server (doesn't neeeded in laragon)
     - Crear modelo, migracion y controller a la vez
 - php artisan make:policy **{ModelNamePolicy}** --model=**{ModelName}**
     - Crear arhivo de policys de cierto modelo
-- php artisan tinker
-    - shell de Laravel
+- php artisan view:clear
+    - Eliminar cache de las vistas
 - php artisan make:model --migration --factory **{ModelName}**
     - Hacer modelo, migracion y factory (creacion de registros para pruebas junto con tinker)
 - php artisan make:seeder **{ModelNameSeeder}**
