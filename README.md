@@ -78,9 +78,8 @@ Start the laravel server (doesn't neeeded in laragon)
 - [Trello](https://trello.com/b/HrYki7FI/invitaciones)
 - [DataTables](https://datatables.net/examples/index)
 - [Tailwindscss](https://tailwindcss.com/docs/guides/laravel)
-- [Tailwindcomponents](https://tailwindcomponents.com/)
 - [Tailwind-elements](https://tailwind-elements.com/docs/standard/getting-started/quick-start/#)
-
+- [Flowbite](https://flowbite.com/docs/getting-started/introduction/)
 
 ## Authors
 

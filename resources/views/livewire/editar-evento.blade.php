@@ -1,4 +1,13 @@
-<form class=" md:w-1/2 space-y-5" wire:submit.prevent="crearEvento" >
+<div>
+    @if (session()->has('success'))
+        <div class="uppercase border border-green-600 bg-green-100 text-green-600
+        font-bold p-2 my-3 text-sm">
+            {{ session('success') }}
+        </div>
+    @endif
+
+<form class="grid gap-6 mb-6 md:grid-cols-2" wire:submit.prevent="editarEvento" >
+    
     <div>
         <x-input-label for="clave" :value="__('Clave')" />
         <x-text-input 
@@ -6,7 +15,6 @@
             class="block mt-1 w-full" 
             type="text" 
             wire:model="clave"
-            :value="old('clave')"
             placeholder="Clave unica para los eventos"
         />
         <x-input-error :messages="$errors->get('clave')" class="mt-2" />
@@ -19,7 +27,6 @@
             class="block mt-1 w-full" 
             type="text" 
             wire:model="email"
-            :value="old('email')"
             placeholder="Email del usuario a crear"
         />
         <x-input-error :messages="$errors->get('email')" class="mt-2" />
@@ -27,40 +34,34 @@
 
     <div>
         <x-input-label for="tipo_evento" :value="__('Tipo de evento')" />
-        <select wire:model="tipo_evento_id" id="tipo_evento"
-            class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-            >
+        <x-select wire:model="tipo_evento_id" id="tipo_evento">
                 <option value="">Seleccione un tipo de evento</option>
                 @foreach ($tipo_eventos as $tipo_evento)
                     <option value="{{$tipo_evento->id}}">{{$tipo_evento->nombre}}</option>
                 @endforeach
-        </select>
+        </x-select>
         <x-input-error :messages="$errors->get('tipo_evento_id')" class="mt-2" />
     </div>
 
     <div>
         <x-input-label for="nivel_paquete" :value="__('Nivel de paquete')" />
-        <select wire:model="nivel_paquete_id" id="nivel_paquete"
-            class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-            >
+        <x-select wire:model="nivel_paquete_id" id="nivel_paquete">
                 <option value="">Seleccione un tipo de evento</option>
                 @foreach ($nivel_paquetes as $nivel_paquete)
                     <option value="{{$nivel_paquete->id}}">{{$nivel_paquete->nombre}}</option>
                 @endforeach
-        </select>
+        </x-select>
         <x-input-error :messages="$errors->get('nivel_paquete_id')" class="mt-2" />
     </div>
 
     <div>
         <x-input-label for="plantillas" :value="__('Plantilla')" />
-        <select wire:model="plantilla_id" id="plantillas"
-            class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-            >
+        <x-select wire:model="plantilla_id" id="plantillas">
                 <option value="">Seleccione una plantilla</option>
                 @foreach ($plantillas as $plantilla)
                     <option value="{{$plantilla->id}}">{{$plantilla->nombre}}</option>
                 @endforeach
-        </select>
+        </x-select>
         <x-input-error :messages="$errors->get('plantilla_id')" class="mt-2" />
     </div>
 
@@ -106,15 +107,12 @@
         <x-input-error :messages="$errors->get('fecha')" class="mt-2" />
     </div>
 
-
-    <x-primary-button class="gap-2">
-        Guardar
-    </x-primary-button>
-
-    <a href="{{ route('evento.index') }}">
-        <x-secondary-button>
-            Regresar
-        </x-secondary-button>
-    </a>
+    <div class="mt-8">
+        <x-primary-button class="gap-2">
+            Guardar
+        </x-primary-button>
+    </div>
     
 </form>
+
+</div>

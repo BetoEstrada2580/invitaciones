@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('titulo');
             $table->dateTime('fecha');
             $table->string('mensaje')->nullable();
-            $table->string('titulo_final',100)->nullable();
-            $table->string('mensaje_final',100)->nullable();
+            $table->string('titulo_final',200)->nullable();
+            $table->string('mensaje_final',200)->nullable();
             $table->string('hashtag',100)->nullable();
             $table->string('video')->nullable();
             $table->string('cancion')->nullable();

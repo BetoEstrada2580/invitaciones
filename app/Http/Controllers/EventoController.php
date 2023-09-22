@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Evento;
 use Illuminate\Http\Request;
 
 class EventoController extends Controller
@@ -41,9 +42,9 @@ class EventoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Evento $evento)
     {
-        //
+        return view('eventos.edit',compact('evento'));
     }
 
     /**

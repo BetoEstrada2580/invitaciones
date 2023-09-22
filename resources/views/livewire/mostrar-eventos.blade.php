@@ -22,16 +22,14 @@
 
             <div class="flex flex-col md:flex-row items-stretch gap-3 mt-5 md:mt-0 text-center">
                 
-                <a href="{{ route('evento.edit', ['evento'=>$evento->id]) }}" class="bg-blue-800 py-2 px-4 rounded-lg text-xs font-bold
-                uppercase">
-                Editar
-                </a>
+                <x-secondary-button onclick="window.location='{{ route('evento.edit', ['evento'=>$evento->id]) }}'">
+                    {{ __('Editar') }}
+                </x-secondary-button>
 
-                <button @click="$dispatch('eliminar', {{$evento}} )"
-                class="bg-red-600 py-2 px-4 rounded-lg text-xs font-bold
-                uppercase">
-                Eliminar
-                </button>
+                <x-danger-button @click="$dispatch('eliminar', {{$evento}} )">
+                    {{ __('Eliminar') }}
+                </x-danger-button>
+                
             </div>
         </div>
         @empty

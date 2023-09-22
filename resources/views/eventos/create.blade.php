@@ -14,8 +14,9 @@
                     {{ session('success') }}
                 </div>
             @endif
+            
             <x-card>
-                <h1 class="text-2xl font-bold text-center my-10">Publicar Vacante</h1>
+                <h1 class="text-2xl font-bold text-center my-10">Datos del evento</h1>
                 <div class="md:flex md:justify-center p-3">
                     @livewire('crear-evento')
                 </div>

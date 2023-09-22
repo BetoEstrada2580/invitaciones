@@ -29,4 +29,9 @@ class Evento extends Model
         'updated_by',
     ];
 
+    public function usuario()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
 }
