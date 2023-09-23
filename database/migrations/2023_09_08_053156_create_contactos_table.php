@@ -14,12 +14,7 @@ return new class extends Migration
         Schema::create('contactos', function (Blueprint $table) {
             $table->BigIncrements('id');
             $table->foreignId('evento_id')->constrained()->onDelete('cascade');
-            $table->string('titulo',50);
-            $table->string('nombre',150);
-            $table->string('apellidoPaterno',100)->nullable();
-            $table->string('apellidoMaterno',100)->nullable();
-            $table->string('email',100)->nullable();
-            $table->boolean('enviarCorreo');
+            $table->string('nombre');
             $table->string('telefono',16);
         });
     }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->BigIncrements('id');
             $table->foreignId('evento_id')->constrained()->onDelete('cascade');
             $table->smallInteger('tipo_ubicacion_id')->unsigned();
-            $table->string('nombre',100);
+            $table->string('nombre',200);
             $table->dateTime('fecha');
             $table->string('direccion');
             $table->string('url');

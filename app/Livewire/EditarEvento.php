@@ -47,7 +47,7 @@ class EditarEvento extends Component
         $this->plantilla_id = $evento->plantilla_id;
         $this->festejado = $evento->festejado;
         $this->titulo = $evento->titulo;
-        $this->fecha = Carbon::parse($evento->ultimo_dia)->format('Y-m-d') . 'T' . Carbon::parse($evento->ultimo_dia)->format('h:i');
+        $this->fecha = Carbon::parse($evento->fecha)->format('Y-m-d\TH:i');
         $this->user_id = $evento->user_id;
     }
 

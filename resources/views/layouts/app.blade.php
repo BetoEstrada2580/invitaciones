@@ -41,7 +41,9 @@
                 {{ $slot }}
             </main>
         </div>
-        @livewireScripts
+        <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.x.x/dist/alpine-clipboard.js" defer></script>
+        @livewireScriptConfig
+        
         <script>
             var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
             var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');

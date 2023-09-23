@@ -76,5 +76,5 @@
         });
     </script>
 
-@endpush
+    @endpush
 </div>

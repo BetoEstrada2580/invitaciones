@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Evento extends Model
 {
     use HasFactory;
-    protected $casts = [ 'fecha'=>'date'];
+    
+    protected $casts = [ 'fecha'=>'datetime'];
 
     protected $fillable = [
         'tipo_evento_id',

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Contacto extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+
+    protected $fillable = [
+        'evento_id',
+        'nombre',
+        'telefono',
+    ];
 }

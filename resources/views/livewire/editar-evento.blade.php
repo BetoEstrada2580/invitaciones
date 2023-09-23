@@ -93,7 +93,8 @@
 
     <div>
         @php
-            $min = date("Y-m-d")."T".date("h:i");
+            $dt = new DateTime();
+            $min = $dt->format('Y-m-d\TH:i');
         @endphp
         <x-input-label for="fecha" :value="__('Fecha del evento')" />
         <x-text-input 
