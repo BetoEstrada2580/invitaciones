@@ -13,35 +13,26 @@
         </div>
     @endif
 
-    <x-primary-button type="button" @click="$dispatch('nuevaUbicacion')">
-        Agregar ubicación
+    <x-primary-button type="button" @click="$dispatch('nuevaMesaRegalo')">
+        Agregar mesa de regalos
     </x-primary-button>
     
     <div class="flex flex-col md:flex-row items-stretch gap-3 mt-2">
-    @forelse ($ubicaciones as $ubicacion)
+    @forelse ($regalos as $regalo)
         <div class="p-6 border border-gray-600 rounded-lg dark:border-gray-200 text-gray-900 dark:text-gray-100
         md:flex md:justify-between md:items-center md:w-1/2">
             <div class="space-y-3">
                 <a href="" class="text-xl font-bold">
-                    {{$ubicacion->nombre}}
+                    {{$regalo->tipoMesa->nombre}}
                 </a>
-                <p class="text-base font-bold">
-                    {{$ubicacion->tipoUbicacion->nombre}}
-                </p>
-                <p href="" class="text-base font-bold">
-                    {{$ubicacion->fecha->format('d/m/Y h:i a')}}
-                </p>
-                <p class="text-base font-bold">
-                    {{$ubicacion->direccion}}
-                </p>
             </div>
 
             <div class="flex flex-col md:flex-row items-stretch gap-3 mt-5 md:mt-0 text-center">
-                <x-secondary-button @click="$dispatch('consultarUbicacion', { ubicacion: {{$ubicacion}} })">
+                <x-secondary-button @click="$dispatch('consultarMesaRegalo', { MesaRegalo: {{$regalo->id}} })">
                     {{ __('Editar') }}
                 </x-secondary-button>
 
-                <x-danger-button @click="$dispatch('eliminarUbicacionModal', {{$ubicacion}} )">
+                <x-danger-button @click="$dispatch('eliminarUbicacionModal', {{$regalo}} )">
                     {{ __('Eliminar') }}
                 </x-danger-button>
                 
@@ -49,19 +40,20 @@
         </div>
     @empty
     <p class="p-3 text-center text-2xl text-gray-900 dark:text-gray-100">
-        No hay ubicaciones que mostrar
+        No hay MesaRegalos que mostrar
     </p>
     @endforelse
     </div>
-@include('eventos.modals.ubicacion')
+@include('eventos.modals.mesaRegalo')
 
 @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
-           @this.on('eliminarUbicacionModal', (ubicacion) => {
+           @this.on('eliminarUbicacionModal', (MesaRegalo) => {
             // El siguiente código es el Alert utilizado
+            console.log(MesaRegalo.tipo_mesa);
             Swal.fire({
-            title: '¿Eliminar ubicación: '+ubicacion.nombre+'?',
+            title: '¿Eliminar mesa de regalo: '+MesaRegalo.tipo_mesa.nombre+'?',
             text: "Una evento eliminada no se puede recuperar",
             icon: 'warning',
             showCancelButton: true,
@@ -71,12 +63,11 @@
             cancelButtonText: 'Cancelar'
             }).then((result) => {
             if (result.isConfirmed) {
-                //eliminar la evento
-                @this.dispatch('eliminarUbicacion', {ubicacion: ubicacion});
+                @this.dispatch('eliminarMesaRegalo', {MesaRegalo: MesaRegalo});
 
                 Swal.fire(
                 '¡Eliminado!',
-                'El evento se ha eliminado correctamente',
+                'El MesaRegalo se ha eliminado correctamente',
                 'success'
                 );
             }

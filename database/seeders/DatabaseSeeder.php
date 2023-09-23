@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             PlantillaSeeder::class,
             UserSeeder::class,
             EventoSeeder::class,
+            TipoMesaRegaloSeeder::class,
         ]);
     }
 }

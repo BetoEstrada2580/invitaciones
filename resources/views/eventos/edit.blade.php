@@ -93,7 +93,7 @@
                         </h2>
                         <div id="accordion-color-body-6" class="hidden" aria-labelledby="accordion-color-heading-6">
                         <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
-                            <p>Form para la mesa de regalos</p>
+                            @livewire('mesa-regalo-evento', ['evento' => $evento])
                         </div>
                         </div>
 
@@ -108,7 +108,7 @@
                         </h2>
                         <div id="accordion-color-body-7" class="hidden" aria-labelledby="accordion-color-heading-7">
                         <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
-                            <p>Form para los contactos</p>
+                            @livewire('contactos-evento', ['evento' => $evento])
                         </div>
                         </div>
                     </div>
@@ -124,4 +124,8 @@
             </x-card>
         </div>
     </div>
+    @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @endpush
+</div>
 </x-app-layout>

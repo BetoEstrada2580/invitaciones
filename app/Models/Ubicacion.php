@@ -20,4 +20,9 @@ class Ubicacion extends Model
         'direccion',
         'url',
     ];
+
+    public function tipoUbicacion()
+    {
+        return $this->belongsTo(Tipo_ubicacion::class,'tipo_ubicacion_id');
+    }
 }
