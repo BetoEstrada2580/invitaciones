@@ -81,8 +81,8 @@ class MesaRegaloEvento extends Component
             $exito = $this->editarMesaRegalo($datos);
         }
         if($exito)
-        { session()->flash('success','Mesa de regalo guardada exitosamente');}
-        else{session()->flash('error','Error al guardar la mesa de regalo');}
+        { session()->flash('success','Opción de regalo guardada exitosamente');}
+        else{session()->flash('error','Error al guardar la opción de regalo');}
         $this->dispatch('close-modal');
         return redirect()->back();
     }

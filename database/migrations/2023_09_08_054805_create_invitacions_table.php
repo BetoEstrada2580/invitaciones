@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('invitacions', function (Blueprint $table) {
             $table->BigIncrements('id');
             $table->foreignId('evento_id')->constrained()->onDelete('cascade');
-            $table->foreignId('mesa_id')->constrained()->onDelete('cascade');
+            $table->foreignId('mesa_id')->nullable()->constrained()->onDelete('cascade');
             $table->smallInteger('estatus_invitacion_id')->unsigned();
             $table->uuid('codigo');
             $table->string('nombre');
-            $table->string('mensaje')->nullable();
-            $table->string('mensaje_invitado')->nullable();
+            // $table->string('mensaje')->nullable();
+            // $table->string('mensaje_invitado')->nullable();
             $table->string('email',100)->nullable();
             $table->string('telefono',16)->nullable();
             $table->timestamps();

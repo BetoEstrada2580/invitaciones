@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('imagens', function (Blueprint $table) {
             $table->BigIncrements('id');
-            $table->smallInteger('tipo_imagen_id')->unsigned();
             $table->foreignId('evento_id')->constrained()->onDelete('cascade');
+            $table->smallInteger('tipo_imagen_id')->unsigned();
             $table->string('url');
         });
 

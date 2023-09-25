@@ -29,6 +29,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             EventoSeeder::class,
             TipoMesaRegaloSeeder::class,
+            EstatusInvitacionSeeder::class,
+            InvitacionSeeder::class,
+            TipoImagenSeeder::class
         ]);
     }
 }

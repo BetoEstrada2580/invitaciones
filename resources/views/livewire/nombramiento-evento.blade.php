@@ -13,29 +13,31 @@
         </div>
     @endif
 
-    <x-primary-button type="button" @click="$dispatch('nuevoContacto')">
-        Agregar contacto
+    <x-primary-button type="button" @click="$dispatch('nuevoNombramiento')">
+        Agregar nombramiento
     </x-primary-button>
     
     <div class="grid md:grid-cols-2 gap-3 mt-2">
-    @forelse ($contactos as $contacto)
+    @forelse ($nombramientos as $nombramiento)
         <div class="p-3 border border-gray-600 rounded-lg dark:border-gray-200 text-gray-900 dark:text-gray-100
-        md:flex md:justify-between md:items-center">
-            <div class="space-y-3">
-                <p class="text-2xl font-bold">
-                    {{$contacto->nombre}}
+        md:flex md:items-center">
+            <div class="w-3/12">
+                <img class="rounded-full h-auto w-20" src="{{ asset('storage/nombramientos/'.$nombramiento->imagen->url) }}" alt="Imagen actual" >
+            </div>
+            <div class="w-6/12 space-y-3">
+                <p class="text-xl font-bold">
+                    {{$nombramiento->invitado->nombre}}
                 </p>
                 <p class="text-base font-bold">
-                    {{$contacto->telefono}}
+                    {{$nombramiento->titulo}}
                 </p>
             </div>
-
-            <div class="flex flex-col md:flex-row items-stretch gap-3 mt-5 md:mt-0 text-center">
-                <x-secondary-button @click="$dispatch('consultarContacto', { contacto: {{$contacto->id}} })">
+            <div class="w-3/12 flex flex-col items-stretch gap-3 mt-5 md:mt-0 text-center">
+                <x-secondary-button @click="$dispatch('consultarNombramiento', { nombramiento: {{$nombramiento->id}} })">
                     {{ __('Editar') }}
                 </x-secondary-button>
 
-                <x-danger-button @click="$dispatch('eliminarContactoModal', {{$contacto}} )">
+                <x-danger-button @click="$dispatch('eliminarNombramientoModal', {{$nombramiento}} )">
                     {{ __('Eliminar') }}
                 </x-danger-button>
                 
@@ -43,20 +45,20 @@
         </div>
     @empty
     <p class="p-3 text-center text-2xl text-gray-900 dark:text-gray-100">
-        No hay contactos que mostrar
+        No hay nombramientos que mostrar
     </p>
     @endforelse
     </div>
-@include('eventos.modals.contacto')
+@include('eventos.modals.nombramiento')
 
 @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
-           @this.on('eliminarContactoModal', (contacto) => {
+           @this.on('eliminarNombramientoModal', (nombramiento) => {
             // El siguiente código es el Alert utilizado
             Swal.fire({
-            title: '¿Eliminar contacto: '+contacto.nombre+'?',
-            text: "Una evento eliminada no se puede recuperar",
+            title: '¿Eliminar nombramiento de: '+nombramiento.invitado.nombre+'?',
+            text: "Un nombramiento eliminada no se puede recuperar",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -65,11 +67,11 @@
             cancelButtonText: 'Cancelar'
             }).then((result) => {
             if (result.isConfirmed) {
-                @this.dispatch('eliminarContacto', {contacto: contacto});
+                @this.dispatch('eliminarNombramiento', {nombramiento: nombramiento});
 
                 Swal.fire(
                 '¡Eliminado!',
-                'El contacto se ha eliminado correctamente',
+                'El nombramiento se ha eliminado correctamente',
                 'success'
                 );
             }

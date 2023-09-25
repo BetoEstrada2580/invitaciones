@@ -22,13 +22,16 @@
         <div class="p-6 border border-gray-600 rounded-lg dark:border-gray-200 text-gray-900 dark:text-gray-100
         md:flex md:justify-between md:items-center md:w-1/2">
             <div class="space-y-3">
-                <a href="" class="text-xl font-bold">
+                <p class="text-2xl font-bold">
                     {{$ubicacion->nombre}}
-                </a>
+                </p>
                 <p class="text-base font-bold">
                     {{$ubicacion->tipoUbicacion->nombre}}
                 </p>
-                <p href="" class="text-base font-bold">
+            </div>
+
+            <div class="space-y-3">
+                <p class="text-base font-bold">
                     {{$ubicacion->fecha->format('d/m/Y h:i a')}}
                 </p>
                 <p class="text-base font-bold">
@@ -36,7 +39,7 @@
                 </p>
             </div>
 
-            <div class="flex flex-col md:flex-row items-stretch gap-3 mt-5 md:mt-0 text-center">
+            <div class="flex flex-col items-stretch gap-3 mt-5 md:mt-0 text-center">
                 <x-secondary-button @click="$dispatch('consultarUbicacion', { ubicacion: {{$ubicacion}} })">
                     {{ __('Editar') }}
                 </x-secondary-button>

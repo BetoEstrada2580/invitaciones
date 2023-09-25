@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('invitacion_id')->constrained()->onDelete('cascade');
             $table->string('titulo',50);
             $table->foreignId('imagen_id')->nullable()->constrained()->onDelete('cascade');
+            $table->smallInteger('orden');
         });
     }
 
