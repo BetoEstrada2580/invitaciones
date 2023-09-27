@@ -13,23 +13,25 @@
         </div>
     @endif
 
-    <x-primary-button type="button" @click="$dispatch('nuevaGaleria')">
-        Agregar imagen a la galeria
+    <x-primary-button type="button" @click="$dispatch('nuevaImagen')">
+        Agregar imagen al evento
     </x-primary-button>
     
     <div class="grid md:grid-cols-2 gap-3 mt-2">
-    @forelse ($galerias as $galeria)
-        <div class="p-3 border border-gray-600 rounded-lg dark:border-gray-200 text-gray-900 dark:text-gray-100
-        md:flex md:gap-3 md:items-center">
-            <div>
-                <img class="h-auto max-w-xs" src="{{ asset('storage/galerias/'.$galeria->imagen->url) }}" alt="Imagen actual" >
+    @forelse ($principales as $principal)
+        <div class="p-3 border border-gray-600 rounded-lg dark:border-gray-200 text-gray-900 dark:text-gray-100 flex flex-col justify-center items-center gap-3">
+            <p class="text-2xl font-bold">
+                {{$principal->tipoImagen->nombre}}
+            </p>
+            <div class="flex items-center">
+                <img class="h-auto max-w-xs max-h-52" src="{{ asset('storage/eventos/'.$principal->url) }}" alt="Imagen actual" >
             </div>
-            <div class="flex flex-col items-stretch gap-3 mt-5 md:mt-0 text-center">
-                <x-secondary-button @click="$dispatch('consultarGaleria', { galeria: {{$galeria->id}} })">
+            <div class="inline-flex items-stretch gap-3 mt-5 md:mt-0 text-center">
+                <x-secondary-button @click="$dispatch('consultarImagen', { imagen: {{$principal->id}} })">
                     {{ __('Editar') }}
                 </x-secondary-button>
 
-                <x-danger-button @click="$dispatch('eliminarGaleriaModal', {{$galeria}} )">
+                <x-danger-button @click="$dispatch('eliminarImagenModal', {{$principal}} )">
                     {{ __('Eliminar') }}
                 </x-danger-button>
                 
@@ -37,20 +39,20 @@
         </div>
     @empty
     <p class="p-3 text-center text-2xl text-gray-900 dark:text-gray-100">
-        No hay imagenes de galeria que mostrar
+        No hay imagenes de imagen que mostrar
     </p>
     @endforelse
     </div>
-@include('eventos.modals.galeria')
+@include('eventos.modals.imagen')
 
 @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
-           @this.on('eliminarGaleriaModal', (galeria) => {
+           @this.on('eliminarImagenModal', (principal) => {
             // El siguiente código es el Alert utilizado
             Swal.fire({
-            title: '¿Eliminar imagen de galeria?',
-            text: "Una imagen de galeria eliminada no se puede recuperar",
+            title: `¿Eliminar imagen ${principal.tipo_imagen.nombre} ?`,
+            text: "Una imagen de imagen eliminada no se puede recuperar",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -59,11 +61,11 @@
             cancelButtonText: 'Cancelar'
             }).then((result) => {
             if (result.isConfirmed) {
-                @this.dispatch('eliminarGaleria', {galeria: galeria});
+                @this.dispatch('eliminarImagen', {imagen: principal});
 
                 Swal.fire(
                 '¡Eliminado!',
-                'La imagen de la galeria se ha eliminado correctamente',
+                'La imagen de la imagen se ha eliminado correctamente',
                 'success'
                 );
             }

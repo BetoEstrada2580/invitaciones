@@ -6,10 +6,12 @@ use App\Models\Evento;
 use App\Models\Galeria;
 use App\Models\Imagen;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
+// #[Lazy]
 class GaleriaEvento extends Component
 {
     use WithFileUploads;
@@ -23,8 +25,8 @@ class GaleriaEvento extends Component
     protected function rules()
     {
         return [
-            'imagen'        => ['required_if:galeria_id,null','image','max:1024'],
-            'orden'         => ['nullable','numeric'],
+            'imagen'    => [$this->galeria_id ? 'nullable' :'required','image','max:1024'],
+            'orden'     => ['required','numeric'],
         ];
     }
 
@@ -34,7 +36,7 @@ class GaleriaEvento extends Component
 
     public function render()
     {
-        $galerias = Galeria::where('evento_id',$this->evento_id);
+        $galerias = Galeria::where('evento_id',$this->evento_id)->get();
         return view('livewire.galeria-evento',compact('galerias'));
     }
 
@@ -66,7 +68,7 @@ class GaleriaEvento extends Component
         $datos = $this->validate();
         $exito = 0;
         
-        if(!$this->Galeria_id)
+        if(!$this->galeria_id)
         {
             $exito = $this->crearGaleria($datos);
         }
@@ -84,19 +86,17 @@ class GaleriaEvento extends Component
     public function crearGaleria($datos)
     {
         //* Almacenar la imagen
-        $imagen = $this->imagen->store('public/Galerias');
-        $filename = str_replace('public/Galerias/','',$imagen);
+        $imagen = $this->imagen->store('public/galerias');
+        $filename = str_replace('public/galerias/','',$imagen);
 
         $nuevaImagen = Imagen::create([
             'evento_id'         =>  $this->evento_id,
-            'tipo_imagen_id'    =>  1, //Galeria
+            'tipo_imagen_id'    =>  5, //Galeria
             'url'               =>  $filename,
         ]);
 
         return Galeria::create([
             'evento_id'     =>  $this->evento_id,
-            'invitacion_id' =>  $datos['invitacion_id'],
-            'titulo'        =>  $datos['titulo'],
             'imagen_id'     =>  $nuevaImagen->id,
             'orden'         =>  $datos['orden'],
         ]);
@@ -104,21 +104,18 @@ class GaleriaEvento extends Component
 
     public function editarGaleria($datos)
     {
-        $Galeria = Galeria::find($this->Galeria_id);
+        $Galeria = Galeria::find($this->galeria_id);
         $imagenGaleria = Imagen::find($Galeria->imagen_id);
 
         if($this->imagen){
-            $imagen = $this->imagen->store('public/Galerias');
-            $filename = str_replace('public/Galerias/','',$imagen);
-            Storage::delete('public/Galerias/'.$imagenGaleria->url);
+            $imagen = $this->imagen->store('public/galerias');
+            $filename = str_replace('public/galerias/','',$imagen);
+            Storage::delete('public/galerias/'.$imagenGaleria->url);
         }
         
         $imagenGaleria->url = $filename;
         $imagenGaleria->save();
-
-        $Galeria->invitacion_id    = $datos['invitacion_id'];
-        $Galeria->titulo           = $datos['titulo'];
-        $Galeria->orden            = $datos['orden'];
+        $Galeria->orden = $datos['orden'];
         return $Galeria->save();
     }
 
@@ -126,7 +123,7 @@ class GaleriaEvento extends Component
     public function eliminarGaleria(Galeria $galeria)
     {
         $imagenGaleria = Imagen::find($galeria->imagen_id);
-        Storage::delete('public/Galerias/'.$imagenGaleria->url);
+        Storage::delete('public/galerias/'.$imagenGaleria->url);
         $imagenGaleria->delete();
         $galeria->delete();
     }

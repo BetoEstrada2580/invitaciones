@@ -108,14 +108,16 @@
     </div>
 
 
-    <x-primary-button class="gap-2">
-        Guardar
-    </x-primary-button>
-
-    <a href="{{ route('evento.index') }}">
-        <x-secondary-button>
-            Regresar
-        </x-secondary-button>
-    </a>
+    <div class="flex items-center justify-between w-full">
+        <x-primary-button class="gap-2">
+            Guardar
+        </x-primary-button>
+    
+        <a href="{{ route('evento.index') }}">
+            <x-secondary-button>
+                Regresar
+            </x-secondary-button>
+        </a>
+    </div>
     
 </form>

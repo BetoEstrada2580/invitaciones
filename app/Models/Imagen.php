@@ -15,5 +15,10 @@ class Imagen extends Model
         'tipo_imagen_id',
         'url',
     ];
+
+    public function tipoImagen()
+    {
+        return $this->belongsTo(Tipo_imagen::class,'tipo_imagen_id');
+    }
     
 }

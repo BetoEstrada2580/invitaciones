@@ -7,10 +7,12 @@ use App\Models\Imagen;
 use App\Models\Invitacion;
 use App\Models\Nombramiento;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Lazy;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
+// #[Lazy]
 class NombramientoEvento extends Component
 {
     use WithFileUploads;

@@ -28,6 +28,7 @@
             type="text" 
             wire:model="email"
             placeholder="Email del usuario a crear"
+            readonly
         />
         <x-input-error :messages="$errors->get('email')" class="mt-2" />
     </div>
