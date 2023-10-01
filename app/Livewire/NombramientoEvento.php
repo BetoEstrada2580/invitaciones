@@ -43,7 +43,7 @@ class NombramientoEvento extends Component
     {  
         $listado = Nombramiento::pluck('invitacion_id');
         $invitados = Invitacion::where('evento_id',$this->evento_id)->whereNotIn('id',$listado)->orderBy('nombre', 'ASC')->get();
-        $nombramientos = Nombramiento::where('evento_id',$this->evento_id)->get();
+        $nombramientos = Nombramiento::where('evento_id',$this->evento_id)->orderBy('orden')->get();
         return view('livewire.nombramiento-evento',compact('invitados','nombramientos'));
     }
 
@@ -75,20 +75,16 @@ class NombramientoEvento extends Component
     public function formNombramiento()
     {
         $datos = $this->validate();
-        $exito = 0;
-        
-        if(!$this->nombramiento_id)
-        {
-            $exito = $this->crearNombramiento($datos);
+        try {
+            if(!$this->nombramiento_id)
+            {   $this->crearNombramiento($datos);   }
+            else
+            {   $this->editarNombramiento($datos);  }
+            $this->dispatch('notify', type:'success',title: 'Nombramiento guardado exitosamente');
+            $this->dispatch('close-modal');
+        } catch (\Throwable $th) {
+            $this->dispatch('notify', type:'error',title: 'Error al guardar el nombramiento');
         }
-        else
-        {
-            $exito = $this->editarNombramiento($datos);
-        }
-        if($exito)
-        { session()->flash('success','Nombramiento guardado exitosamente');}
-        else{session()->flash('error','Error al guardar el nombramiento');}
-        $this->dispatch('close-modal');
         return redirect()->back();
     }
 
@@ -97,27 +93,24 @@ class NombramientoEvento extends Component
         //* Almacenar la imagen
         $imagen = $this->imagen->store('public/nombramientos');
         $filename = str_replace('public/nombramientos/','',$imagen);
-
         $nuevaImagen = Imagen::create([
             'evento_id'         =>  $this->evento_id,
             'tipo_imagen_id'    =>  1, //Nombramiento
             'url'               =>  $filename,
         ]);
-
-        return Nombramiento::create([
+        Nombramiento::create([
             'evento_id'     =>  $this->evento_id,
             'invitacion_id' =>  $datos['invitacion_id'],
             'titulo'        =>  $datos['titulo'],
             'imagen_id'     =>  $nuevaImagen->id,
             'orden'         =>  $datos['orden'],
         ]);
-    } 
+    }
 
     public function editarNombramiento($datos)
     {
         $nombramiento = Nombramiento::find($this->nombramiento_id);
         $imagenNombramiento = Imagen::find($nombramiento->imagen_id);
-
         if($this->imagen){
             $imagen = $this->imagen->store('public/nombramientos');
             $filename = str_replace('public/nombramientos/','',$imagen);
@@ -125,19 +118,23 @@ class NombramientoEvento extends Component
             $imagenNombramiento->url = $filename;
             $imagenNombramiento->save();
         }
-
         $nombramiento->invitacion_id    = $datos['invitacion_id'];
         $nombramiento->titulo           = $datos['titulo'];
         $nombramiento->orden            = $datos['orden'];
-        return $nombramiento->save();
+        $nombramiento->save();
     }
 
     #[On('eliminarNombramiento')]
     public function eliminarNombramiento(Nombramiento $nombramiento)
     {
-        $imagenNombramiento = Imagen::find($nombramiento->imagen_id);
-        Storage::delete('public/nombramientos/'.$imagenNombramiento->url);
-        $imagenNombramiento->delete();
-        $nombramiento->delete();
+        try {
+            $imagenNombramiento = Imagen::find($nombramiento->imagen_id);
+            Storage::delete('public/nombramientos/'.$imagenNombramiento->url);
+            $imagenNombramiento->delete();
+            $nombramiento->delete();
+            $this->dispatch('notify', type:'success',title: 'El nombramiento se ha eliminado correctamente');
+        } catch (\Throwable $th) {
+            $this->dispatch('notify', type:'error',title: 'Error al eliminar el nombramiento');
+        }
     }
 }

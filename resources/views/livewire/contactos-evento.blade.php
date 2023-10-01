@@ -52,30 +52,35 @@
 @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
-           @this.on('eliminarContactoModal', (contacto) => {
-            // El siguiente código es el Alert utilizado
-            Swal.fire({
-            title: '¿Eliminar contacto: '+contacto.nombre+'?',
-            text: "Una evento eliminada no se puede recuperar",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, ¡Eliminar!',
-            cancelButtonText: 'Cancelar'
-            }).then((result) => {
-            if (result.isConfirmed) {
-                @this.dispatch('eliminarContacto', {contacto: contacto});
+            @this.on('eliminarContactoModal', (contacto) => {
+                Swal.fire({
+                title: '¿Eliminar contacto: '+contacto.nombre+'?',
+                text: "Una evento eliminada no se puede recuperar",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, ¡Eliminar!',
+                cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    @this.dispatch('eliminarContacto', {contacto: contacto});
+                }
+                });
+            });
 
+            @this.on('notify', (event) => {
                 Swal.fire(
-                '¡Eliminado!',
-                'El contacto se ha eliminado correctamente',
-                'success'
+                    {
+                        icon: event.type,
+                        title: event.title,
+                        showConfirmButton: false,
+                        timer:3000,
+                        timerProgressBar: true
+                    }
                 );
-            }
             });
 
-            });
         });
     </script>
 

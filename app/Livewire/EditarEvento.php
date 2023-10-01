@@ -75,7 +75,7 @@ class EditarEvento extends Component
         //* Guardar la evento
         $evento->save();
         //* Crear un mensaje
-        session()->flash('success','El evento se actualizó correctamente');
+        $this->dispatch('notify', type:'success',title: 'El evento se actualizó correctamente');
         //* Redireccionar al usuario
         return redirect()->back();
     }

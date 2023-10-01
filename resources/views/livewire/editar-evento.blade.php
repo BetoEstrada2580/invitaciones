@@ -1,12 +1,6 @@
 <div>
-    @if (session()->has('success'))
-        <div class="uppercase border border-green-600 bg-green-100 text-green-600
-        font-bold p-2 my-3 text-sm">
-            {{ session('success') }}
-        </div>
-    @endif
 
-<form class="grid gap-6 mb-6 md:grid-cols-2" wire:submit.prevent="editarEvento" >
+<form class="grid gap-6 mb-6 md:grid-cols-2" wire:submit="editarEvento" novalidate >
     
     <div>
         <x-input-label for="clave" :value="__('Clave')" />
@@ -110,11 +104,33 @@
     </div>
 
     <div class="mt-8">
-        <x-primary-button class="gap-2">
+        <x-primary-button class="gap-2" wire:loading.attr="disabled">
             Guardar
         </x-primary-button>
     </div>
     
+    <div wire:loading> 
+        <x-loading/>
+    </div>
+
 </form>
+
+@push('scripts')
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            @this.on('notify', (event) => {
+                Swal.fire(
+                    {
+                        icon: event.type,
+                        title: event.title,
+                        showConfirmButton: false,
+                        timer:3000,
+                        timerProgressBar: true
+                    }
+                );
+            });
+        });
+    </script>
+@endpush
 
 </div>

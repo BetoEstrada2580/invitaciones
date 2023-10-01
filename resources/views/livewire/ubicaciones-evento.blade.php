@@ -61,31 +61,35 @@
 @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
-           @this.on('eliminarUbicacionModal', (ubicacion) => {
-            // El siguiente código es el Alert utilizado
-            Swal.fire({
-            title: '¿Eliminar ubicación: '+ubicacion.nombre+'?',
-            text: "Una evento eliminada no se puede recuperar",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, ¡Eliminar!',
-            cancelButtonText: 'Cancelar'
-            }).then((result) => {
-            if (result.isConfirmed) {
-                //eliminar la evento
-                @this.dispatch('eliminarUbicacion', {ubicacion: ubicacion});
+            @this.on('eliminarUbicacionModal', (ubicacion) => {
+                Swal.fire({
+                title: '¿Eliminar ubicación: '+ubicacion.nombre+'?',
+                text: "Una evento eliminada no se puede recuperar",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, ¡Eliminar!',
+                cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    @this.dispatch('eliminarUbicacion', {ubicacion: ubicacion});
+                }
+                });
+            });
 
+            @this.on('notify', (event) => {
                 Swal.fire(
-                '¡Eliminado!',
-                'El evento se ha eliminado correctamente',
-                'success'
+                    {
+                        icon: event.type,
+                        title: event.title,
+                        showConfirmButton: false,
+                        timer:3000,
+                        timerProgressBar: true
+                    }
                 );
-            }
             });
-
-            });
+        
         });
     </script>
 

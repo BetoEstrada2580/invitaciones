@@ -58,26 +58,22 @@ class ContactosEvento extends Component
     public function formContacto()
     {
         $datos = $this->validate();
-        $exito = 0;
-        
-        if(!$this->contacto_id)
-        {
-            $exito = $this->crearContacto($datos);
+        try {
+            if(!$this->contacto_id)
+            {   $this->crearContacto($datos);   }
+            else
+            {   $this->editarContacto($datos);  }
+            $this->dispatch('notify', type:'success',title: 'Contacto guardado exitosamente');
+            $this->dispatch('close-modal');
+        } catch (\Throwable $th) {
+            $this->dispatch('notify', type:'error',title: 'Error al guardar el contacto');
         }
-        else
-        {
-            $exito = $this->editarContacto($datos);
-        }
-        if($exito)
-        { session()->flash('success','Contacto guardado exitosamente');}
-        else{session()->flash('error','Error al guardar el contacto');}
-        $this->dispatch('close-modal');
         return redirect()->back();
     }
 
     public function crearContacto($datos)
     {
-        return Contacto::create([
+        Contacto::create([
             'evento_id' =>  $this->evento_id,
             'nombre'    =>  $datos['nombre'],
             'telefono'  =>  $datos['telefono'],
@@ -86,16 +82,20 @@ class ContactosEvento extends Component
 
     public function editarContacto($datos)
     {
-        // dd( $datos['fecha']);
         $Contacto = Contacto::find($this->contacto_id);
         $Contacto->nombre = $datos['nombre'];
         $Contacto->telefono = $datos['telefono'];
-        return $Contacto->save();
+        $Contacto->save();
     }
 
     #[On('eliminarContacto')]
     public function eliminarContacto(Contacto $contacto)
     {
-        $contacto->delete();
+        try {
+            $contacto->delete();
+            $this->dispatch('notify', type:'success',title: 'El contacto eliminado correctamente');
+        } catch (\Throwable $th) {
+            $this->dispatch('notify', type:'error',title: 'Error al eliminar el contacto');
+        }
     }
 }

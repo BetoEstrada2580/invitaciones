@@ -36,7 +36,7 @@ class GaleriaEvento extends Component
 
     public function render()
     {
-        $galerias = Galeria::where('evento_id',$this->evento_id)->get();
+        $galerias = Galeria::where('evento_id',$this->evento_id)->orderBy('orden')->get();
         return view('livewire.galeria-evento',compact('galerias'));
     }
 
@@ -46,6 +46,7 @@ class GaleriaEvento extends Component
         $evento_id= $this->evento_id;
         $this->reset();
         $this->evento_id = $evento_id;
+        $this->imagen = null;
         $this->resetValidation();
         $this->dispatch('open-modal', 'ModalGaleria');
     }
@@ -66,20 +67,17 @@ class GaleriaEvento extends Component
     public function formGaleria()
     {
         $datos = $this->validate();
-        $exito = 0;
         
-        if(!$this->galeria_id)
-        {
-            $exito = $this->crearGaleria($datos);
+        try {
+            if(!$this->galeria_id)
+            {   $this->crearGaleria($datos);    }
+            else
+            {   $this->editarGaleria($datos);  }
+            $this->dispatch('notify', type:'success',title: 'Imagen de la galeria guardada exitosamente');
+            $this->dispatch('close-modal');
+        } catch (\Throwable $th) {
+            $this->dispatch('notify', type:'error',title: 'Error al guardar la imagen de la galeria');
         }
-        else
-        {
-            $exito = $this->editarGaleria($datos);
-        }
-        if($exito)
-        { session()->flash('success','Imagen de galeria guardada exitosamente');}
-        else{session()->flash('error','Error al guardar la imagen de la galeria');}
-        $this->dispatch('close-modal');
         return redirect()->back();
     }
 
@@ -88,14 +86,12 @@ class GaleriaEvento extends Component
         //* Almacenar la imagen
         $imagen = $this->imagen->store('public/galerias');
         $filename = str_replace('public/galerias/','',$imagen);
-
         $nuevaImagen = Imagen::create([
             'evento_id'         =>  $this->evento_id,
             'tipo_imagen_id'    =>  5, //Galeria
             'url'               =>  $filename,
         ]);
-
-        return Galeria::create([
+        Galeria::create([
             'evento_id'     =>  $this->evento_id,
             'imagen_id'     =>  $nuevaImagen->id,
             'orden'         =>  $datos['orden'],
@@ -106,26 +102,29 @@ class GaleriaEvento extends Component
     {
         $Galeria = Galeria::find($this->galeria_id);
         $imagenGaleria = Imagen::find($Galeria->imagen_id);
-
         if($this->imagen){
             $imagen = $this->imagen->store('public/galerias');
             $filename = str_replace('public/galerias/','',$imagen);
             Storage::delete('public/galerias/'.$imagenGaleria->url);
+            $imagenGaleria->url = $filename;
+            $imagenGaleria->save();
         }
-        
-        $imagenGaleria->url = $filename;
-        $imagenGaleria->save();
         $Galeria->orden = $datos['orden'];
-        return $Galeria->save();
+        $Galeria->save();
     }
 
     #[On('eliminarGaleria')]
     public function eliminarGaleria(Galeria $galeria)
     {
-        $imagenGaleria = Imagen::find($galeria->imagen_id);
-        Storage::delete('public/galerias/'.$imagenGaleria->url);
-        $imagenGaleria->delete();
-        $galeria->delete();
+        try {
+            $imagenGaleria = Imagen::find($galeria->imagen_id);
+            Storage::delete('public/galerias/'.$imagenGaleria->url);
+            $imagenGaleria->delete();
+            $galeria->delete();
+            $this->dispatch('notify', type:'success',title: 'La imagen de la galeria se ha eliminado correctamente');
+        } catch (\Throwable $th) {
+            $this->dispatch('notify', type:'error',title: 'Error al eliminar la imagen de la galeria');
+        }
     }
     
 }

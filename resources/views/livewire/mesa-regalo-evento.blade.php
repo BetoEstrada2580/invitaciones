@@ -20,14 +20,14 @@
     <div class="flex flex-col md:flex-row items-stretch gap-3 mt-2">
     @forelse ($regalos as $regalo)
         <div class="p-3 border border-gray-600 rounded-lg dark:border-gray-200 text-gray-900 dark:text-gray-100
-        md:flex md:justify-between md:items-center md:w-1/2">
+        flex flex-col justify-between items-center md:w-1/2">
             <div class="space-y-3">
                 <p class="text-xl font-bold">
                     {{$regalo->tipoMesa->nombre}}
                 </p>
             </div>
 
-            <div class="flex flex-col md:flex-row items-stretch gap-3 mt-5 md:mt-0 text-center">
+            <div class="flex items-stretch gap-3 mt-5 md:mt-0 text-center">
                 <x-secondary-button @click="$dispatch('consultarMesaRegalo', { MesaRegalo: {{$regalo->id}} })">
                     {{ __('Editar') }}
                 </x-secondary-button>
@@ -49,31 +49,35 @@
 @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
-           @this.on('eliminarUbicacionModal', (MesaRegalo) => {
-            // El siguiente código es el Alert utilizado
-            console.log(MesaRegalo.tipo_mesa);
-            Swal.fire({
-            title: '¿Eliminar opción de regalo de: '+MesaRegalo.tipo_mesa.nombre+'?',
-            text: "Una opción de regalo eliminada no se puede recuperar",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, ¡Eliminar!',
-            cancelButtonText: 'Cancelar'
-            }).then((result) => {
-            if (result.isConfirmed) {
-                @this.dispatch('eliminarMesaRegalo', {MesaRegalo: MesaRegalo});
+            @this.on('eliminarUbicacionModal', (MesaRegalo) => {
+                Swal.fire({
+                title: '¿Eliminar opción de regalo de: '+MesaRegalo.tipo_mesa.nombre+'?',
+                text: "Una opción de regalo eliminada no se puede recuperar",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, ¡Eliminar!',
+                cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    @this.dispatch('eliminarMesaRegalo', {MesaRegalo: MesaRegalo});
+                }
+                });
+            });
 
+            @this.on('notify', (event) => {
                 Swal.fire(
-                '¡Eliminado!',
-                'El MesaRegalo se ha eliminado correctamente',
-                'success'
+                    {
+                        icon: event.type,
+                        title: event.title,
+                        showConfirmButton: false,
+                        timer:3000,
+                        timerProgressBar: true
+                    }
                 );
-            }
             });
 
-            });
         });
     </script>
 

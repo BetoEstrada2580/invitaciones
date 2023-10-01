@@ -12,6 +12,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
+        @livewireStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script>
             // On page load or when changing themes, best to add inline in `head` to avoid FOUC
@@ -85,7 +86,9 @@
                 }
                 
             });
+            
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         @stack('scripts')
     </body>
 </html>

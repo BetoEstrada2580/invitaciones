@@ -70,26 +70,23 @@ class MesaRegaloEvento extends Component
     public function formMesaRegalo()
     {
         $datos = $this->validate();
-        $exito = 0;
         
-        if(!$this->mesa_regalo_id)
-        {
-            $exito = $this->crearMesaRegalo($datos);
+        try {
+            if(!$this->mesa_regalo_id)
+            {   $this->crearMesaRegalo($datos); }
+            else
+            {   $this->editarMesaRegalo($datos); }
+            $this->dispatch('notify', type:'success',title: 'Opción de regalo guardada exitosamente');
+            $this->dispatch('close-modal');
+        } catch (\Throwable $th) {
+            $this->dispatch('notify', type:'error',title: 'Error al guardar la opción de regalo');
         }
-        else
-        {
-            $exito = $this->editarMesaRegalo($datos);
-        }
-        if($exito)
-        { session()->flash('success','Opción de regalo guardada exitosamente');}
-        else{session()->flash('error','Error al guardar la opción de regalo');}
-        $this->dispatch('close-modal');
         return redirect()->back();
     }
 
     public function crearMesaRegalo($datos)
     {
-        return Mesa_regalo::create([
+        Mesa_regalo::create([
             'evento_id'             =>  $this->evento_id,
             'tipo_mesa_regalo_id'   =>  $datos['tipo_mesa_regalo_id'],
             'codigo'                =>  $datos['codigo'],
@@ -107,12 +104,17 @@ class MesaRegaloEvento extends Component
         $MesaRegalo->url = $datos['url'];
         $MesaRegalo->banco = $datos['banco'];
         $MesaRegalo->clabe = $datos['clabe'];
-        return $MesaRegalo->save();
+        $MesaRegalo->save();
     }
 
     #[On('eliminarMesaRegalo')]
     public function eliminarMesaRegalo(Mesa_regalo $MesaRegalo)
     {
-        $MesaRegalo->delete();
+        try {
+            $MesaRegalo->delete();
+            $this->dispatch('notify', type:'success',title: 'La opción de regalo se ha eliminado correctamente');
+        } catch (\Throwable $th) {
+            $this->dispatch('notify', type:'error',title: 'Error al eliminar la opción de regalo');
+        }
     }
 }

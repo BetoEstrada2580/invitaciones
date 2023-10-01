@@ -47,6 +47,7 @@ class ImagenEvento extends Component
         $evento_id= $this->evento_id;
         $this->reset();
         $this->evento_id = $evento_id;
+        $this->imagen = null;
         $this->resetValidation();
         $this->dispatch('open-modal', 'ModalImagen');
     }
@@ -67,20 +68,16 @@ class ImagenEvento extends Component
     public function formImagen()
     {
         $datos = $this->validate();
-        $exito = 0;
-        
-        if(!$this->imagen_id)
-        {
-            $exito = $this->crearImagen($datos);
+        try {
+            if(!$this->imagen_id)
+            {   $this->crearImagen($datos); }
+            else
+            {   $this->editarImagen($datos); }
+            $this->dispatch('notify', type:'success',title: 'Imagen del evento guardada exitosamente');
+            $this->dispatch('close-modal');
+        } catch (\Throwable $th) {
+            $this->dispatch('notify', type:'error',title: 'Error al guardar la imagen del evento');
         }
-        else
-        {
-            $exito = $this->editarImagen($datos);
-        }
-        if($exito)
-        { session()->flash('success','Imagen del evento guardada exitosamente');}
-        else{session()->flash('error','Error al guardar la imagen del evento');}
-        $this->dispatch('close-modal');
         return redirect()->back();
     }
 
@@ -89,7 +86,7 @@ class ImagenEvento extends Component
         $imagen = $this->imagen->store('public/eventos');
         $filename = str_replace('public/eventos/','',$imagen);
 
-        return Imagen::create([
+        Imagen::create([
             'evento_id'         =>  $this->evento_id,
             'tipo_imagen_id'    =>  $datos['tipo_imagen_id'],
             'url'               =>  $filename,
@@ -99,7 +96,6 @@ class ImagenEvento extends Component
     public function editarImagen($datos)
     {
         $Imagen = Imagen::find($this->imagen_id);
-
         if($this->imagen){
             $imagen = $this->imagen->store('public/eventos');
             $filename = str_replace('public/eventos/','',$imagen);
@@ -107,15 +103,19 @@ class ImagenEvento extends Component
             $Imagen->url = $filename;
         }
         $Imagen->tipo_imagen_id = $datos['tipo_imagen_id'];
-
-        return $Imagen->save();
+        $Imagen->save();
     }
 
     #[On('eliminarImagen')]
     public function eliminarImagen(Imagen $imagen)
     {
-        Storage::delete('public/eventos/'.$imagen->url);
-        $imagen->delete();
+        try {
+            Storage::delete('public/eventos/'.$imagen->url);
+            $imagen->delete();
+            $this->dispatch('notify', type:'success',title: 'La imagen del evento se ha eliminado correctamente');
+        } catch (\Throwable $th) {
+            $this->dispatch('notify', type:'error',title: 'Error al eliminar la imagen del evento');
+        }
     }
 
 }

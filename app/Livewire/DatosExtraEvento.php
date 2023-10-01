@@ -59,7 +59,7 @@ class DatosExtraEvento extends Component
         //* Guardar la evento
         $evento->save();
         //* Crear un mensaje
-        session()->flash('success','El evento se actualizó correctamente');
+        $this->dispatch('notify', type:'success',title: 'Datos actualizados correctamente');
         //* Redireccionar al usuario
         return redirect()->back();
     }

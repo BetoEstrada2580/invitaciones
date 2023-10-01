@@ -85,11 +85,33 @@
     </div>
 
     <div class="mt-8">
-        <x-primary-button class="gap-2">
+        <x-primary-button class="gap-2" wire:loading.attr="disabled">
             Guardar
         </x-primary-button>
     </div>
     
+    <div wire:loading> 
+        <x-loading/>
+    </div>
+    
 </form>
+
+@push('scripts')
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            @this.on('notify', (event) => {
+                Swal.fire(
+                    {
+                        icon: event.type,
+                        title: event.title,
+                        showConfirmButton: false,
+                        timer:3000,
+                        timerProgressBar: true
+                    }
+                );
+            });
+        });
+    </script>
+@endpush
 
 </div>

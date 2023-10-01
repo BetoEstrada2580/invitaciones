@@ -1,4 +1,5 @@
 <x-app-layout>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Editar evento') }}
@@ -143,8 +144,5 @@
             </x-card>
         </div>
     </div>
-    @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @endpush
 </div>
 </x-app-layout>

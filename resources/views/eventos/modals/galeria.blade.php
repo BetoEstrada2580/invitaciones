@@ -58,9 +58,13 @@
                     @endif
 
                     <div class="mt-8">
-                        <x-primary-button class="gap-2">
+                        <x-primary-button class="gap-2" wire:loading.attr="disabled">
                             Guardar
                         </x-primary-button>
+                    </div>
+
+                    <div wire:loading> 
+                        <x-loading/>
                     </div>
                     
                 </form>

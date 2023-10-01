@@ -17,7 +17,7 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <form class="grid gap-6 mb-6 md:grid-cols-2" wire:submit.prevent="formUbicacion" >
+                <form class="grid gap-6 mb-6 md:grid-cols-2" wire:submit.prevent="formUbicacion" novalidate>
 
                     <div>
                         <x-input-label for="tipo_ubicacion_id" :value="__('Tipo de ubicación')" />
@@ -85,9 +85,13 @@
                     </div>
                 
                     <div class="mt-8">
-                        <x-primary-button class="gap-2">
+                        <x-primary-button class="gap-2" wire:loading.attr="disabled">
                             Guardar
                         </x-primary-button>
+                    </div>
+
+                    <div wire:loading> 
+                        <x-loading/>
                     </div>
                     
                 </form>

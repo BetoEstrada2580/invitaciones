@@ -36,7 +36,7 @@ class UbicacionesEvento extends Component
 
     public function render()
     {   $tipo_ubicaciones = Tipo_ubicacion::all();
-        $ubicaciones = Ubicacion::all();
+        $ubicaciones = Ubicacion::orderBy('fecha')->get();
         return view('livewire.ubicaciones-evento',compact('tipo_ubicaciones','ubicaciones'));
     }
 
@@ -69,26 +69,26 @@ class UbicacionesEvento extends Component
     public function formUbicacion()
     {
         $datos = $this->validate();
-        $exito = 0;
-        
-        if(!$this->ubicacion_id)
-        {
-            $exito = $this->crearUbicacion($datos);
+        try {
+            if(!$this->ubicacion_id)
+            {
+                $this->crearUbicacion($datos);
+            }
+            else
+            {
+                $this->editarUbicacion($datos);
+            }
+            $this->dispatch('notify', type:'success',title: 'Ubicación guardada exitosamente');
+            $this->dispatch('close-modal');
+        } catch (\Throwable $th) {
+            $this->dispatch('notify', type:'error',title: 'Error al guardar ubicación');
         }
-        else
-        {
-            $exito = $this->editarUbicacion($datos);
-        }
-        if($exito)
-        { session()->flash('success','Ubiación guardada exitosamente');}
-        else{session()->flash('error','Error al guardar ubicación');}
-        $this->dispatch('close-modal');
         return redirect()->back();
     }
 
     public function crearUbicacion($datos)
     {
-        return Ubicacion::create([
+        Ubicacion::create([
             'evento_id'         =>  $this->evento_id,
             'tipo_ubicacion_id' =>  $datos['tipo_ubicacion_id'],
             'nombre'            =>  $datos['nombre'],
@@ -100,20 +100,24 @@ class UbicacionesEvento extends Component
 
     public function editarUbicacion($datos)
     {
-        // dd( $datos['fecha']);
         $ubicacion = Ubicacion::find($this->ubicacion_id);
         $ubicacion->tipo_ubicacion_id = $datos['tipo_ubicacion_id'];
         $ubicacion->nombre = $datos['nombre'];
         $ubicacion->fecha = $datos['fecha'];
         $ubicacion->direccion = $datos['direccion'];
         $ubicacion->url = $datos['url'];
-        return $ubicacion->save();
+        $ubicacion->save();
     }
 
     #[On('eliminarUbicacion')]
     public function eliminarUbicacion(Ubicacion $ubicacion)
     {
-        $ubicacion->delete();
+        try {
+            $ubicacion->delete();
+            $this->dispatch('notify', type:'success',title: 'La ubicación se ha eliminado correctamente');
+        } catch (\Throwable $th) {
+            $this->dispatch('notify', type:'error',title: 'Error al eliminar la ubicación del evento');
+        }
     }
 
 }
