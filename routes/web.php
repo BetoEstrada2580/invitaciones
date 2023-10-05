@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -39,6 +40,8 @@ Route::middleware('auth','admin')->group(function () {
     require __DIR__.'/evento.php';
 });
 
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('/register', [RegisteredUserController::class, 'store']);
 
 //Notificaciones
 Route::get('/notificaciones',NotificacionController::class)->middleware(['auth'])->name('notificaciones');

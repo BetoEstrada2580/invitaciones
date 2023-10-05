@@ -36,10 +36,6 @@
             <x-link
                 :href="route('password.request')"
             >Olvidaste tu cuenta</x-link>
-            
-            <x-link
-                :href="route('register')"
-            >Crear cuenta</x-link>
         </div>
 
         <x-primary-button class="w-full justify-center">
