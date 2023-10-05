@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NotificacionController;
 
@@ -45,3 +46,4 @@ Route::get('/register', [RegisteredUserController::class, 'create'])->name('regi
 
 //Notificaciones
 Route::get('/notificaciones',NotificacionController::class)->middleware(['auth'])->name('notificaciones');
+Route::get('send-mail', [MailController::class, 'index']);
