@@ -13,16 +13,16 @@
     </div>
 
     <div>
-        <x-input-label for="email" :value="__('Email')" />
-        <x-text-input 
-            id="email" 
-            class="block mt-1 w-full" 
-            type="text" 
-            wire:model="email"
-            :value="old('email')"
-            placeholder="Email del usuario a crear"
-        />
-        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <x-input-label for="user_id" :value="__('Usuario')" />
+        <select wire:model="user_id" id="user_id"
+            class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+            >
+                <option value="">Seleccione un usuario</option>
+                @foreach ($usuarios as $usuario)
+                    <option value="{{$usuario->id}}">{{$usuario->email}}</option>
+                @endforeach
+        </select>
+        <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
     </div>
 
     <div>
@@ -109,15 +109,18 @@
 
 
     <div class="flex items-center justify-between w-full">
-        <x-primary-button class="gap-2">
-            Guardar
-        </x-primary-button>
-    
-        <a href="{{ route('evento.index') }}">
+        <a href="{{ route('evento.index') }}" wire:loading.attr="disabled">
             <x-secondary-button>
                 Regresar
             </x-secondary-button>
         </a>
+        
+        <x-primary-button class="gap-2" wire:loading.attr="disabled">
+            Guardar
+        </x-primary-button>
     </div>
     
+    <div wire:loading> 
+        <x-loading/>
+    </div>
 </form>

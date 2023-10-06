@@ -36,7 +36,7 @@ class UbicacionesEvento extends Component
 
     public function render()
     {   $tipo_ubicaciones = Tipo_ubicacion::all();
-        $ubicaciones = Ubicacion::orderBy('fecha')->get();
+        $ubicaciones = Ubicacion::where('evento_id',$this->evento_id)->orderBy('fecha')->get();
         return view('livewire.ubicaciones-evento',compact('tipo_ubicaciones','ubicaciones'));
     }
 

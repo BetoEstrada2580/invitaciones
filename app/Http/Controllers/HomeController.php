@@ -12,7 +12,7 @@ class HomeController extends Controller
     public function __invoke(Request $request)
     {
         if(auth()->user()->rol_id === 1)
-            return view('eventos.index');
+            return redirect()->route('evento.index');
         
         return view('dashboard');
 

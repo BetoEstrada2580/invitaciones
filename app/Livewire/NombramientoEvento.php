@@ -31,7 +31,7 @@ class NombramientoEvento extends Component
             'invitacion_id' => ['required','numeric','unique:nombramientos,invitacion_id,'.$this->nombramiento_id],
             'titulo'        => ['required', 'string','max:50'],
             'imagen'        => [$this->nombramiento_id ? 'nullable' :'required','image','max:1024'],
-            'orden'         => ['nullable','numeric'],
+            'orden'         => ['required','numeric'],
         ];
     }
 

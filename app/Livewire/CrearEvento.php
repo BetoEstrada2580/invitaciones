@@ -15,7 +15,7 @@ use Illuminate\Auth\Events\Registered;
 class CrearEvento extends Component
 {
     public $clave;
-    public $email;
+    public $user_id;
     public $tipo_evento_id;
     public $nivel_paquete_id;
     public $plantilla_id;
@@ -25,7 +25,8 @@ class CrearEvento extends Component
 
     protected $rules = [
         'clave' => ['required', 'string', 'max:255','unique:'.Evento::class,'alpha_num'],
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+        // 'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+        'user_id' => ['required', 'numeric'],
         'tipo_evento_id' => ['required', 'numeric'],
         'nivel_paquete_id' => ['required', 'numeric'],
         'plantilla_id' => ['required', 'numeric'],
@@ -38,14 +39,14 @@ class CrearEvento extends Component
     {
         $datos = $this->validate();
 
-        $user = User::create([
-            'name' => $datos['festejado'],
-            'email' => $datos['email'],
-            'rol_id' => 3, //Cliente
-            'password' => Hash::make(Str::random(10)),
-        ]);
+        // $user = User::create([
+        //     'name' => $datos['festejado'],
+        //     'email' => $datos['email'],
+        //     'rol_id' => 3, //Cliente
+        //     'password' => Hash::make(Str::random(10)),
+        // ]);
 
-        event(new Registered($user));
+        // event(new Registered($user));
 
         //* Crear el evento
         Evento::create([
@@ -56,7 +57,7 @@ class CrearEvento extends Component
             'festejado'=>$datos['festejado'],
             'titulo'=>$datos['titulo'],
             'fecha'=>$datos['fecha'],
-            'user_id'=> auth()->user()->id,
+            'user_id'=> $datos['user_id'],
             'created_by'=> auth()->user()->id,
             'updated_by'=> auth()->user()->id
         ]);
@@ -74,6 +75,7 @@ class CrearEvento extends Component
         $tipo_eventos = Tipo_evento::all();
         $nivel_paquetes = Nivel_paquete::all();
         $plantillas = Plantilla::all();
-        return view('livewire.crear-evento',compact('tipo_eventos','nivel_paquetes','plantillas'));
+        $usuarios = User::where('rol_id',3)->get();
+        return view('livewire.crear-evento',compact('tipo_eventos','nivel_paquetes','plantillas','usuarios'));
     }
 }

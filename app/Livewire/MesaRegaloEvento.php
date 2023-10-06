@@ -35,7 +35,7 @@ class MesaRegaloEvento extends Component
     
     public function render()
     {
-        $regalos = Mesa_regalo::all();
+        $regalos = Mesa_regalo::where('evento_id',$this->evento_id)->orderBy('tipo_mesa_regalo_id')->get();
         $tipoMesaRegalos = Tipo_mesa_regalo::all();
         return view('livewire.mesa-regalo-evento',compact('regalos','tipoMesaRegalos'));
     }

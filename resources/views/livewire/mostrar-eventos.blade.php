@@ -1,4 +1,6 @@
 <div>
+    @livewire('filtrar-eventos')
+    <hr class="mb-3">
     <a href="{{ route('evento.create') }}">
         <x-primary-button class="mb-5">
             {{ __('Agregar evento') }}
@@ -45,31 +47,35 @@
     @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
-           @this.on('eliminar', (evento) => {
-            // El siguiente código es el Alert utilizado
-            Swal.fire({
-            title: '¿Eliminar evento: '+evento.clave+'?',
-            text: "Una evento eliminada no se puede recuperar",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, ¡Eliminar!',
-            cancelButtonText: 'Cancelar'
-            }).then((result) => {
-            if (result.isConfirmed) {
-                //eliminar la evento
-                @this.dispatch('eliminarEvento', {evento: evento});
-
+            @this.on('eliminar', (evento) => {
+                Swal.fire({
+                title: '¿Eliminar evento: '+evento.clave+'?',
+                text: "Una evento eliminada no se puede recuperar",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, ¡Eliminar!',
+                cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    @this.dispatch('eliminarEvento', {evento: evento});
+                }
+                });
+            });
+            
+            @this.on('notify', (event) => {
                 Swal.fire(
-                '¡Eliminado!',
-                'El evento se ha eliminado correctamente',
-                'success'
+                    {
+                        icon: event.type,
+                        title: event.title,
+                        showConfirmButton: false,
+                        timer:3000,
+                        timerProgressBar: true
+                    }
                 );
-            }
             });
-
-            });
+            
         });
     </script>
 

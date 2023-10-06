@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
+use App\Notifications\NuevoUsuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -35,18 +36,22 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'rol_id' => ['required', 'numeric', 'between:1,2,3'],
-            'password' => ['required', 'confirmed'],
+            'rol_id' => ['required', 'numeric', 'between:1,3'],
+            // 'password' => ['required', 'confirmed'],
         ]);
+        
+        $newPassoword = Str::random(10);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'rol_id' => $request->rol_id,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($newPassoword),
         ]);
         
-        event(new Registered($user));
+        // event(new Registered($user));
+
+        $user->notify(new NuevoUsuario($newPassoword));
 
         session()->flash('success','Usuario creado exitosamente');
 

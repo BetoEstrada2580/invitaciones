@@ -28,7 +28,7 @@ class ContactosEvento extends Component
     
     public function render()
     {
-        $contactos = Contacto::all();
+        $contactos = Contacto::where('evento_id',$this->evento_id)->get();
         return view('livewire.contactos-evento',compact('contactos'));
     }
 
@@ -93,7 +93,7 @@ class ContactosEvento extends Component
     {
         try {
             $contacto->delete();
-            $this->dispatch('notify', type:'success',title: 'El contacto eliminado correctamente');
+            $this->dispatch('notify', type:'success',title: 'El contacto fue eliminado correctamente');
         } catch (\Throwable $th) {
             $this->dispatch('notify', type:'error',title: 'Error al eliminar el contacto');
         }

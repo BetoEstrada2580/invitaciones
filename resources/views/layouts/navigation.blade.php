@@ -11,6 +11,11 @@
                 </div>
                 @if (auth()->user()->rol_id === 1)
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('evento.index')" :active="request()->routeIs('evento.index')">
+                            {{ __('Eventos') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
                             {{ __('Crear usuario') }}
                         </x-nav-link>
@@ -91,6 +96,9 @@
         <div class="pt-2 pb-3 space-y-1">
 
             @if (auth()->user()->rol_id === 1)
+                <x-responsive-nav-link :href="route('evento.index')" :active="request()->routeIs('evento.index')">
+                    {{ __('Eventos') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">
                     {{ __('Crear usuario') }}
                 </x-responsive-nav-link>
