@@ -8,30 +8,34 @@
     </a>
     <x-card>
         @forelse ($eventos as $evento)
-        <div class="p-6 border-b border-gray-200 text-gray-900 dark:text-gray-100
-        md:flex md:justify-between md:items-center">
-            <div class="space-y-3">
-                <a href="" class="text-xl font-bold">
+        <div class=" p-2 md:p-6 border-b border-gray-200 text-gray-900 dark:text-gray-100
+        grid gap-1 mb-3 md:grid-cols-3">
+            <div class="space-y-3 font-bold">
+                <a class="text-2xl text">
                     {{$evento->clave}}
                 </a>
-                <p class="text-base font-bold">
+                <p class="text-lg truncate">
                     {{$evento->festejado}}
                 </p>
-                <p href="" class="text-sm">
+            </div>
+            
+            <div class="space-y-3 font-bold text-lg">
+                <p class="text-2xl">
                     {{$evento->fecha->format('d/m/Y')}}
                 </p>
+                <p class="truncate ">
+                    Paquete: {{$evento->paquete->nombre}}
+                </p>
             </div>
-
-            <div class="flex flex-col md:flex-row items-stretch gap-3 mt-5 md:mt-0 text-center">
-                
+            
+            <div class="flex flex-col md:flex-row md:items-center justify-center gap-3 mt-5 md:mt-0 text-center">
                 <x-secondary-button onclick="window.location='{{ route('evento.edit', ['evento'=>$evento->id]) }}'">
                     {{ __('Editar') }}
                 </x-secondary-button>
-
+                
                 <x-danger-button @click="$dispatch('eliminar', {{$evento}} )">
                     {{ __('Eliminar') }}
                 </x-danger-button>
-                
             </div>
         </div>
         @empty
@@ -43,7 +47,7 @@
     <div class="mt-10">
         {{ $eventos->links() }}
     </div>
-
+    
     @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
@@ -78,6 +82,6 @@
             
         });
     </script>
-
+    
     @endpush
 </div>

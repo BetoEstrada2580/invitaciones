@@ -22,12 +22,12 @@
     <div class="grid md:grid-cols-3 gap-3 mt-2 justify-center items-center md:justify-between">
     @forelse ($principales as $principal)
     <div class="p-3 border border-gray-600 rounded-lg dark:border-gray-200 text-gray-900 dark:text-gray-100
-    flex flex-col justify-center items-center gap-3">
+    flex flex-col justify-center items-center gap-3 min-h-full">
         <div>
             <p class="font-bold text-2xl">{{$principal->tipoImagen->nombre}}</p>
         </div>
         <div class="overflow-auto">
-            <img class="h-auto max-h-52 max-w-screen-s" src="{{ asset('storage/eventos/'.$principal->url) }}" alt="Imagen actual" >
+            <img class="h-auto max-h-52 max-w-screen-s min-h-full" src="{{ asset('storage/eventos/'.$principal->url) }}" alt="Imagen actual" >
         </div>
         <div class="flex flex-col md:flex-row gap-3 text-center min-w-full md:min-w-max">
             <x-secondary-button @click="$dispatch('consultarImagen', { imagen: {{$principal->id}} })">

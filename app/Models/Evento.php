@@ -35,4 +35,14 @@ class Evento extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
+    public function paquete()
+    {
+        return $this->belongsTo(Nivel_paquete::class,'nivel_paquete_id');
+    }
+
+    public function tipoEvento()
+    {
+        return $this->belongsTo(Tipo_evento::class,'tipo_evento_id');
+    }
+
 }

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Nivel_paquete;
 use App\Models\Tipo_evento;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class FiltrarEventos extends Component
@@ -11,10 +12,18 @@ class FiltrarEventos extends Component
     public $clave;
     public $tipo_evento_id;
     public $nivel_paquete_id;
-
-    public function formBuscar()
+    public $fecha;
+    
+    #[On('limpiarFiltro')]
+    public function limpiarFiltro()
     {
-        $this->dispatch('buscar',$this->clave,$this->tipo_evento_id,$this->nivel_paquete_id);
+        $this->reset();
+        $this->dispatch('buscar',$this->clave,$this->tipo_evento_id,$this->nivel_paquete_id,$this->fecha);
+    }
+    
+    public function formBuscar()
+    {   
+        $this->dispatch('buscar',$this->clave,$this->tipo_evento_id,$this->nivel_paquete_id,$this->fecha);
     }
     
     public function render()

@@ -20,13 +20,16 @@ class MostrarEventos extends Component
     public $clave;
     public $tipo_evento_id;
     public $nivel_paquete_id;
-
+    public $fecha;
+    
     #[On('buscar')]
-    public function buscar($clave,$tipo_evento,$nivel_paquete)
+    public function buscar($clave,$tipo_evento,$nivel_paquete,$fecha)
     {
         $this->clave = $clave;
         $this->tipo_evento_id = $tipo_evento;
         $this->nivel_paquete_id = $nivel_paquete;
+        $this->fecha = $fecha;
+        // dd($fecha);
         $this->resetPage();
     }
 
@@ -64,6 +67,8 @@ class MostrarEventos extends Component
     
     public function render()
     {
+        // dd($this->fecha);
+        
         $eventos =Evento::when($this->clave,function($query){
             $query->where('clave','LIKE',"%".$this->clave."%")
             ->orWhere('festejado','LIKE',"%".$this->clave."%");
@@ -73,6 +78,9 @@ class MostrarEventos extends Component
         })
         ->when($this->nivel_paquete_id,function($query){
             $query->where('nivel_paquete_id',$this->nivel_paquete_id);
+        })
+        ->when($this->fecha,function($query){
+            $query->whereDate('fecha',$this->fecha);
         })
         ->orderBy('fecha')->paginate(10);
 

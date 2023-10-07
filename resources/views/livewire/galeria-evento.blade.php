@@ -5,14 +5,14 @@
             {{ session('success') }}
         </div>
     @endif
-
+    
     @if (session()->has('error'))
         <div class="uppercase border border-reed-600 bg-red-100 text-red-600
         font-bold p-2 my-3 text-sm">
             {{ session('error') }}
         </div>
     @endif
-
+    
     <x-primary-button type="button" @click="$dispatch('nuevaGaleria')">
         Agregar imagen a la galeria
     </x-primary-button>
@@ -20,7 +20,7 @@
     <div class="grid md:grid-cols-3 gap-3 mt-2 justify-center items-center md:justify-between">
     @forelse ($galerias as $galeria)
         <div class="p-3 border border-gray-600 rounded-lg dark:border-gray-200 text-gray-900 dark:text-gray-100
-        flex flex-col justify-center items-center gap-3">
+        flex flex-col justify-center items-center gap-3 min-h-full">
             <div>
                 <img class="h-auto max-h-52 max-w-screen-s" src="{{ asset('storage/galerias/'.$galeria->imagen->url) }}" alt="Imagen actual" >
             </div>
@@ -28,8 +28,8 @@
                 <x-secondary-button @click="$dispatch('consultarGaleria', { galeria: {{$galeria->id}} })">
                     {{ __('Editar') }}
                 </x-secondary-button>
-
-                <x-danger-button @click="$dispatch('eliminarGaleriaModal', {{$galeria}} )">
+                
+                <x-danger-button @click="$dispatch('eliminarGaleriaModal', { galeria: {{$galeria->id}} } )">
                     {{ __('Eliminar') }}
                 </x-danger-button>
                 
@@ -61,9 +61,8 @@
                     @this.dispatch('eliminarGaleria', {galeria: galeria});
                 }
                 });
-
             });
-
+            
             @this.on('notify', (event) => {
                 Swal.fire(
                     {
@@ -75,9 +74,7 @@
                     }
                 );
             });
-
         });
     </script>
-
     @endpush
 </div>

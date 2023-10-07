@@ -22,10 +22,9 @@ class CrearEvento extends Component
     public $festejado;
     public $titulo;
     public $fecha;
-
+    
     protected $rules = [
         'clave' => ['required', 'string', 'max:255','unique:'.Evento::class,'alpha_num'],
-        // 'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
         'user_id' => ['required', 'numeric'],
         'tipo_evento_id' => ['required', 'numeric'],
         'nivel_paquete_id' => ['required', 'numeric'],
@@ -34,20 +33,11 @@ class CrearEvento extends Component
         'titulo' => ['required', 'string', 'max:255'],
         'fecha' => ['required'],
     ];
-
+    
     public function crearEvento() 
     {
         $datos = $this->validate();
-
-        // $user = User::create([
-        //     'name' => $datos['festejado'],
-        //     'email' => $datos['email'],
-        //     'rol_id' => 3, //Cliente
-        //     'password' => Hash::make(Str::random(10)),
-        // ]);
-
-        // event(new Registered($user));
-
+        
         //* Crear el evento
         Evento::create([
             'clave'=>$datos['clave'],
@@ -61,15 +51,14 @@ class CrearEvento extends Component
             'created_by'=> auth()->user()->id,
             'updated_by'=> auth()->user()->id
         ]);
-
+        
         //* Crear un mensaje
         session()->flash('success','Evento creado exitosamente');
-
+        
         //* Redireccionar al usuario
         return redirect()->route('evento.index');
     }
-
-
+    
     public function render()
     {
         $tipo_eventos = Tipo_evento::all();

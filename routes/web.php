@@ -36,9 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
 Route::middleware('auth','admin')->group(function () {
     require __DIR__.'/evento.php';
+});
+
+Route::middleware('auth','client')->group(function () {
+    require __DIR__.'/invitacion.php';
 });
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');

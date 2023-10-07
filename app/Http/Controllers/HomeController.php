@@ -14,7 +14,7 @@ class HomeController extends Controller
         if(auth()->user()->rol_id === 1)
             return redirect()->route('evento.index');
         
-        return view('dashboard');
-
+        return redirect()->route('invitacion.index');
+        
     }
 }

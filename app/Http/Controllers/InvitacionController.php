@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Evento;
+use App\Models\Invitacion;
 use Illuminate\Http\Request;
 
 class InvitacionController extends Controller
@@ -11,7 +13,12 @@ class InvitacionController extends Controller
      */
     public function index()
     {
-        //
+        $eventos = Evento::where('user_id',auth()->user()->id)->get();
+        $eventosCount = $eventos->count();
+        if($eventosCount == 1)
+            return redirect()->route('invitacion.show',['eventos' => $eventos[0]->id]);
+        
+        return redirect()->route('invitacion.eventos');
     }
 
     /**
@@ -33,9 +40,10 @@ class InvitacionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Evento $evento)
     {
-        //
+        $invitaciones = Invitacion::where('evento_id',$evento->id)->paginate(10);;
+        return view('clientes.invitaciones',compact('invitaciones'));
     }
 
     /**
@@ -60,5 +68,11 @@ class InvitacionController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function eventos()
+    {
+        $eventos = Evento::where('user_id',auth()->user()->id)->paginate(10);
+        return view('clientes.eventos',compact('eventos'));
     }
 }
