@@ -11,7 +11,7 @@ Route::group([
         Route::get('/', 'index')->name('invitacion.index');
         Route::get('/create', 'eventos')->name('invitacion.create');
         Route::post('/{invitacion}/edit', 'edit')->name('invitacion.edit');
-        Route::get('/{eventos}', 'show')->name('invitacion.show');
+        Route::get('/{evento}', 'show')->name('invitacion.show');
         Route::get('/eventos', 'eventos')->name('invitacion.eventos');
     });
     

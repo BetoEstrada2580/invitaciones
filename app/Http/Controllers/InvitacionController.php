@@ -42,8 +42,7 @@ class InvitacionController extends Controller
      */
     public function show(Evento $evento)
     {
-        $invitaciones = Invitacion::where('evento_id',$evento->id)->paginate(10);;
-        return view('clientes.invitaciones',compact('invitaciones'));
+        return view('clientes.invitaciones',compact('evento'));
     }
 
     /**

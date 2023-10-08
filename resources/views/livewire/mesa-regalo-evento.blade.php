@@ -32,7 +32,7 @@
                     {{ __('Editar') }}
                 </x-secondary-button>
 
-                <x-danger-button @click="$dispatch('eliminarUbicacionModal', {{$regalo}} )">
+                <x-danger-button @click="$dispatch('eliminarUbicacionModal',{ id: {{$regalo->id}} , nombre: '{{$regalo->tipoMesa->nombre}}' }) ">
                     {{ __('Eliminar') }}
                 </x-danger-button>
                 
@@ -49,9 +49,9 @@
 @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
-            @this.on('eliminarUbicacionModal', (MesaRegalo) => {
+            @this.on('eliminarUbicacionModal', ({id,nombre}) => {
                 Swal.fire({
-                title: '¿Eliminar opción de regalo de: '+MesaRegalo.tipo_mesa.nombre+'?',
+                title: '¿Eliminar opción de regalo de: '+nombre+'?',
                 text: "Una opción de regalo eliminada no se puede recuperar",
                 icon: 'warning',
                 showCancelButton: true,
@@ -61,7 +61,7 @@
                 cancelButtonText: 'Cancelar'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    @this.dispatch('eliminarMesaRegalo', {MesaRegalo: MesaRegalo});
+                    @this.dispatch('eliminarMesaRegalo', {MesaRegalo: id});
                 }
                 });
             });

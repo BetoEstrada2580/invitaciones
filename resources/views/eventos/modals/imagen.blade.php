@@ -17,7 +17,7 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <form class="grid gap-6 mb-6 md:grid-cols-1" wire:submit.prevent="formImagen" >
+                <form class="grid gap-6 mb-6" wire:submit.prevent="formImagen" >
 
                     <div>
                         <x-input-label for="tipo_imagen_id" :value="__('Tipo de imagen')" />
@@ -41,7 +41,7 @@
                     <div class="grid">
                             <x-input-label :value="__('Imagen nueva')" />
                             <div class="w-full inline-flex justify-center items-center">
-                                <img class="h-auto max-w-xs" src="{{$imagen->temporaryUrl()}}" alt="Imagen nueva" >
+                                <img class="h-auto max-w-full md:max-w-xs" src="{{$imagen->temporaryUrl()}}" alt="Imagen nueva" >
                             </div>
                     </div>
                     @endif
@@ -50,19 +50,18 @@
                     <div class="grid">
                             <x-input-label :value="__('Imagen actual')" />
                             <div class="w-full inline-flex justify-center items-center">
-                                <img class="h-auto max-w-xs" src="{{ asset('storage/eventos/'.$imagen_actual) }}" alt="Imagen actual" >
+                                <img class="h-auto max-w-full md:max-w-xs" src="{{ asset('storage/eventos/'.$imagen_actual) }}" alt="Imagen actual" >
                             </div>
                     </div>
                     @endif
 
-                    <div class="mt-8">
+                    <div class="mt-8 w-full flex justify-end">
                         <x-primary-button class="gap-2" wire:loading.attr="disabled">
                             Guardar
                         </x-primary-button>
-                    </div>
-
-                    <div wire:loading> 
-                        <x-loading/>
+                        <div wire:loading> 
+                            <x-loading/>
+                        </div>
                     </div>
                     
                 </form>

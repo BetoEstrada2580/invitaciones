@@ -34,7 +34,7 @@
                 {{ __('Editar') }}
             </x-secondary-button>
 
-            <x-danger-button @click="$dispatch('eliminarImagenModal', {{$principal}} )">
+            <x-danger-button @click="$dispatch('eliminarImagenModal',{ id: {{$principal->id}} , nombre: '{{$principal->tipoImagen->nombre}}' }) ">
                 {{ __('Eliminar') }}
             </x-danger-button>
             
@@ -51,9 +51,9 @@
 @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
-            @this.on('eliminarImagenModal', (principal) => {
+            @this.on('eliminarImagenModal', ({id,nombre}) => {
                 Swal.fire({
-                title: `¿Eliminar imagen ${principal.tipo_imagen.nombre} ?`,
+                title: `¿Eliminar imagen ${nombre} ?`,
                 text: "Una imagen de imagen eliminada no se puede recuperar",
                 icon: 'warning',
                 showCancelButton: true,
@@ -63,7 +63,7 @@
                 cancelButtonText: 'Cancelar'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    @this.dispatch('eliminarImagen', {imagen: principal});
+                    @this.dispatch('eliminarImagen', {imagen: id});
                 }
                 });
             });

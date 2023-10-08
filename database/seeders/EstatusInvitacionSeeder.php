@@ -14,11 +14,11 @@ class EstatusInvitacionSeeder extends Seeder
     public function run(): void
     {
         DB::table('estatus_invitacions')->insert([
-            'nombre' => 'Aceptada',
+            'nombre' => 'Pendiente',
         ]);
 
         DB::table('estatus_invitacions')->insert([
-            'nombre' => 'Pendiente',
+            'nombre' => 'Aceptada',
         ]);
 
         DB::table('estatus_invitacions')->insert([

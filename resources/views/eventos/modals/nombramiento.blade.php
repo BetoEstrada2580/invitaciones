@@ -17,7 +17,7 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <form class="grid gap-6 mb-6 md:grid-cols-2" wire:submit.prevent="formNombramiento" >
+                <form class="flex-col md:grid gap-6 mb-6 md:grid-cols-2 space-y-3 md:space-y-0" wire:submit.prevent="formNombramiento" >
                 
                     <div class="md:col-span-2">
                         <x-input-label for="invitacion_id" :value="__('Invitado')" />
@@ -29,7 +29,7 @@
                         </x-select>
                         <x-input-error :messages="$errors->get('invitacion_id')" class="mt-2" />
                     </div>
-
+                    
                     <div>
                         <x-input-label for="titulo" :value="__('Titulo')" />
                         <x-text-input 
@@ -41,7 +41,7 @@
                         />
                         <x-input-error :messages="$errors->get('titulo')" class="mt-2" />
                     </div>
-
+                    
                     <div>
                         <x-input-label for="orden" :value="__('Orden')" />
                         <x-text-input 
@@ -54,14 +54,14 @@
                         />
                         <x-input-error :messages="$errors->get('orden')" class="mt-2" />
                     </div>
-
+                    
                     <div class="md:col-span-2">
                         <x-input-label for="titulo" :value="__('Foto')" />
                         <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
                             id="{{ rand() }}" type="file" accept="image/*" wire:model="imagen">
                         <x-input-error :messages="$errors->get('imagen')" class="mt-2" />
                     </div>
-
+                    
                     @if ($imagen)
                     <div class="md:col-span-2 grid">
                             <x-input-label :value="__('Imagen nueva')" />
@@ -70,7 +70,7 @@
                             </div>
                     </div>
                     @endif
-
+                    
                     @if ($imagen_actual)
                     <div class="md:col-span-2 grid">
                             <x-input-label :value="__('Imagen actual')" />
@@ -79,15 +79,14 @@
                             </div>
                     </div>
                     @endif
-
-                    <div class="mt-8">
+                    
+                    <div class="mt-8 w-full flex justify-end col-span-2">
                         <x-primary-button class="gap-2" wire:loading.attr="disabled">
                             Guardar
                         </x-primary-button>
-                    </div>
-
-                    <div wire:loading> 
-                        <x-loading/>
+                        <div wire:loading> 
+                            <x-loading/>
+                        </div>
                     </div>
                     
                 </form>

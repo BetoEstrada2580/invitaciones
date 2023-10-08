@@ -35,7 +35,8 @@
                     {{ __('Editar') }}
                 </x-secondary-button>
 
-                <x-danger-button @click="$dispatch('eliminarContactoModal', {{$contacto}} )">
+                <x-danger-button @click="$dispatch('eliminarContactoModal'
+                    ,{ id: {{$contacto->id}} , nombre: '{{$contacto->nombre}}' }) ">
                     {{ __('Eliminar') }}
                 </x-danger-button>
                 
@@ -52,9 +53,9 @@
 @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
-            @this.on('eliminarContactoModal', (contacto) => {
+            @this.on('eliminarContactoModal', ({id,nombre}) => {
                 Swal.fire({
-                title: '¿Eliminar contacto: '+contacto.nombre+'?',
+                title: '¿Eliminar contacto: '+nombre+'?',
                 text: "Una evento eliminada no se puede recuperar",
                 icon: 'warning',
                 showCancelButton: true,
@@ -64,7 +65,7 @@
                 cancelButtonText: 'Cancelar'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    @this.dispatch('eliminarContacto', {contacto: contacto});
+                    @this.dispatch('eliminarContacto', {contacto: id});
                 }
                 });
             });

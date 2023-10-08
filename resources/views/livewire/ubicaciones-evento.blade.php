@@ -40,11 +40,12 @@
             </div>
 
             <div class="flex flex-col items-stretch gap-3 mt-5 md:mt-0 text-center">
-                <x-secondary-button @click="$dispatch('consultarUbicacion', { ubicacion: {{$ubicacion}} })">
+                <x-secondary-button @click="$dispatch('consultarUbicacion', { ubicacion: {{$ubicacion->id}} })">
                     {{ __('Editar') }}
                 </x-secondary-button>
 
-                <x-danger-button @click="$dispatch('eliminarUbicacionModal', {{$ubicacion}} )">
+                <x-danger-button @click="$dispatch('eliminarUbicacionModal'
+                ,{ id: {{$ubicacion->id}} , nombre: '{{$ubicacion->tipoUbicacion->nombre}}' }) ">
                     {{ __('Eliminar') }}
                 </x-danger-button>
                 
@@ -61,9 +62,9 @@
 @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
-            @this.on('eliminarUbicacionModal', (ubicacion) => {
+            @this.on('eliminarUbicacionModal', ({id,nombre}) => {
                 Swal.fire({
-                title: '¿Eliminar ubicación: '+ubicacion.nombre+'?',
+                title: '¿Eliminar ubicación: '+nombre+'?',
                 text: "Una evento eliminada no se puede recuperar",
                 icon: 'warning',
                 showCancelButton: true,
@@ -73,7 +74,7 @@
                 cancelButtonText: 'Cancelar'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    @this.dispatch('eliminarUbicacion', {ubicacion: ubicacion});
+                    @this.dispatch('eliminarUbicacion', {ubicacion: id});
                 }
                 });
             });

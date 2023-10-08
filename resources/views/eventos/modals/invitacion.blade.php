@@ -1,4 +1,4 @@
-<x-modal name="ModalContacto" :show="$errors->userDeletion->isNotEmpty()" focusable>
+<x-modal name="ModalInvitacion" :show="$errors->userDeletion->isNotEmpty()" focusable>
     <div class="relative w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -17,16 +17,16 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <form class="grid gap-6 mb-6 md:grid-cols-2" wire:submit.prevent="formContacto" >
+                <form class="grid gap-6 mb-6 md:grid-cols-2" wire:submit.prevent="formInvitacion" >
                 
                     <div>
                         <x-input-label for="nombre" :value="__('Nombre')" />
                         <x-text-input 
-                            id="clave" 
+                            id="nombre" 
                             class="block mt-1 w-full" 
                             type="text" 
                             wire:model="nombre"
-                            placeholder="Nombre del contacto"
+                            placeholder="Nombre de la persona"
                         />
                         <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
                     </div>
@@ -38,9 +38,33 @@
                             class="block mt-1 w-full" 
                             type="tel" 
                             wire:model="telefono"
-                            placeholder="Telefono del contacto"
+                            placeholder="Telefono celular"
                         />
                         <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
+                    </div>
+
+                    <div>
+                        <x-input-label for="email" :value="__('Email')" />
+                        <x-text-input 
+                            id="email" 
+                            class="block mt-1 w-full" 
+                            type="email" 
+                            wire:model="email"
+                            placeholder="Correo electrónico"
+                        />
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    </div>
+
+                    <div>
+                        <x-input-label for="pases" :value="__('Pases')" />
+                        <x-text-input 
+                            id="pases" 
+                            class="block mt-1 w-full" 
+                            type="number" 
+                            wire:model="pases"
+                            min='1'
+                        />
+                        <x-input-error :messages="$errors->get('pases')" class="mt-2" />
                     </div>
 
                     <div class="mt-8 w-full flex justify-end col-span-2">

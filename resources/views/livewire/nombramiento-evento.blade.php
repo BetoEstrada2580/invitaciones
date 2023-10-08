@@ -37,7 +37,8 @@
                     {{ __('Editar') }}
                 </x-secondary-button>
 
-                <x-danger-button @click="$dispatch('eliminarNombramientoModal', {{$nombramiento}} )">
+                <x-danger-button @click="$dispatch('eliminarNombramientoModal'
+                ,{ id: {{$nombramiento->id}} , nombre: '{{$nombramiento->invitado->nombre}}' }) ">
                     {{ __('Eliminar') }}
                 </x-danger-button>
                 
@@ -54,9 +55,9 @@
 @push('scripts')
     <script>
         document.addEventListener('livewire:initialized', () => {
-            @this.on('eliminarNombramientoModal', (nombramiento) => {
+            @this.on('eliminarNombramientoModal', ({id,nombre}) => {
                 Swal.fire({
-                title: '¿Eliminar nombramiento de: '+nombramiento.invitado.nombre+'?',
+                title: '¿Eliminar nombramiento de: '+nombre+'?',
                 text: "Un nombramiento eliminado no se puede recuperar",
                 icon: 'warning',
                 showCancelButton: true,
@@ -66,7 +67,7 @@
                 cancelButtonText: 'Cancelar'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    @this.dispatch('eliminarNombramiento', {nombramiento: nombramiento});
+                    @this.dispatch('eliminarNombramiento', {nombramiento: id});
                 }
                 });
             });

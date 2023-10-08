@@ -81,14 +81,13 @@
                         <x-input-error :messages="$errors->get('clabe')" class="mt-2" />
                     </div>
                 
-                    <div class="mt-8">
+                    <div class="mt-8 w-full flex justify-end col-span-2">
                         <x-primary-button class="gap-2" wire:loading.attr="disabled">
                             Guardar
                         </x-primary-button>
-                    </div>
-
-                    <div wire:loading> 
-                        <x-loading/>
+                        <div wire:loading> 
+                            <x-loading/>
+                        </div>
                     </div>
                     
                 </form>

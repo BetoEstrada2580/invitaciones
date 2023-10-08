@@ -132,7 +132,6 @@
                         </div>
 
                     </div>
-
                 </div>
                 <div class="w-full inline-flex justify-center items-center">
                     <a href="{{ route('evento.index') }}">

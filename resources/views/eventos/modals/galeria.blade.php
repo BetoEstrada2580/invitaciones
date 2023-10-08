@@ -17,7 +17,7 @@
             </div>
             <!-- Modal body -->
             <div class="p-6 space-y-6">
-                <form class="grid gap-6 mb-6 md:grid-cols-1" wire:submit.prevent="formGaleria" >
+                <form class="grid gap-6 mb-6" wire:submit.prevent="formGaleria" >
                 
                     <div>
                         <x-input-label for="orden" :value="__('Orden')" />
@@ -31,40 +31,39 @@
                         />
                         <x-input-error :messages="$errors->get('orden')" class="mt-2" />
                     </div>
-
+                    
                     <div>
                         <x-input-label for="titulo" :value="__('Foto')" />
                         <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" 
                             id="imagen" type="file" accept="image/*" wire:model="imagen">
                         <x-input-error :messages="$errors->get('imagen')" class="mt-2" />
                     </div>
-
+                    
                     @if ($imagen)
                     <div class="grid">
                             <x-input-label :value="__('Imagen nueva')" />
                             <div class="w-full inline-flex justify-center items-center">
-                                <img class="h-auto max-w-xs" src="{{$imagen->temporaryUrl()}}" alt="Imagen nueva" >
+                                <img class="h-auto max-w-full md:max-w-xs" src="{{$imagen->temporaryUrl()}}" alt="Imagen nueva" >
                             </div>
                     </div>
                     @endif
-
+                    
                     @if ($imagen_actual)
                     <div class="grid">
                             <x-input-label :value="__('Imagen actual')" />
                             <div class="w-full inline-flex justify-center items-center">
-                                <img class="h-auto max-w-xs" src="{{ asset('storage/galerias/'.$imagen_actual) }}" alt="Imagen actual" >
+                                <img class="h-auto max-w-full md:max-w-xs" src="{{ asset('storage/galerias/'.$imagen_actual) }}" alt="Imagen actual" >
                             </div>
                     </div>
                     @endif
-
-                    <div class="mt-8">
+                    
+                    <div class="mt-8 w-full flex justify-end">
                         <x-primary-button class="gap-2" wire:loading.attr="disabled">
                             Guardar
                         </x-primary-button>
-                    </div>
-
-                    <div wire:loading> 
-                        <x-loading/>
+                        <div wire:loading> 
+                            <x-loading/>
+                        </div>
                     </div>
                     
                 </form>
