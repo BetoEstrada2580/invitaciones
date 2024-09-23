@@ -8,8 +8,9 @@ COPY . /var/www/html
 WORKDIR /var/www/html
 
 # Set correct permissions and list directory
-RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R 755 /var/www/html && \
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
+    chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache && \
+    echo "APP_DEBUG=true" >> /var/www/html/.env && \
     ls -al /var/www/html && \
     ls -al /var/www/html/public
 
