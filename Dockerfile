@@ -7,12 +7,11 @@ COPY . /var/www/html
 # Set the working directory in the container
 WORKDIR /var/www/html
 
-# Ensure correct permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
-
-# Verify the contents of the root directory
-RUN ls -al /var/www/html
+# Set correct permissions and list directory
+RUN chown -R www-data:www-data /var/www/html && \
+    chmod -R 755 /var/www/html && \
+    ls -al /var/www/html && \
+    ls -al /var/www/html/public
 
 # Custom Apache Configuration
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
