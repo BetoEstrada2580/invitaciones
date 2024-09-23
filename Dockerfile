@@ -1,4 +1,4 @@
-# Use the official PHP image as the base image
+# Use the official PHP image with PHP 8.1
 FROM php:8.1-apache
 
 # Copy the application files into the container
@@ -6,6 +6,10 @@ COPY . /var/www/html
 
 # Set the working directory in the container
 WORKDIR /var/www/html
+
+# Set correct permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
 
 # Install necessary PHP extensions
 RUN apt-get update && apt-get install -y \
