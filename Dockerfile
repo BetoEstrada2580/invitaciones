@@ -7,14 +7,13 @@ COPY . /var/www/html
 # Set the working directory in the container
 WORKDIR /var/www/html
 
-# Set correct permissions and list directory
+# Ensure files and directories have correct permissions and enable debugging
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
     chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache && \
     echo "APP_DEBUG=true" >> /var/www/html/.env && \
-    ls -al /var/www/html && \
-    ls -al /var/www/html/public
+    echo "APP_URL=http://localhost" >> /var/www/html/.env
 
-# Custom Apache Configuration
+# Custom Apache Configuration pointing to public folder
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Install necessary PHP extensions
@@ -31,6 +30,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install Laravel dependencies
 RUN composer install --no-dev
+
+# Generate application key
+RUN php artisan key:generate
 
 # Expose port 80
 EXPOSE 80
