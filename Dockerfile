@@ -1,7 +1,7 @@
 # Use the official PHP image with PHP 8.1
 FROM php:8.1-apache
 
-# Copy the application files into the container
+# Copy application files into the container
 COPY . /var/www/html
 
 # Set the working directory in the container
